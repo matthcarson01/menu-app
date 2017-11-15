@@ -1,0 +1,20 @@
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css');
+@import url('https://unpkg.com/purecss@1.0.0/build/pure-min.css');
+header{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:10px;
+}
+nav{
+  display:flex;
+  justify-content:space-between;
+  width:90%;
+}
+main{
+  display:flex;
+  flex-flow:row no-wrap;
+  justify-content:center;
+  align-items:center;
+  height: 50vh;
+}
