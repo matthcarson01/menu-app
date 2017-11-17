@@ -1,19 +1,39 @@
 import React, { Component } from 'react';
+import axios from 'axios';
+
+
+import {connect} from 'react-redux';
 import './Home.css';
 
-export default class Home extends Component {
+class Home extends Component {
     constructor(props){
         super(props);
+        this.state = {
+
+        }
+        this.handleLogin = this.handleLogin.bind(this)
     }
+    handleLogin(){
+        window.location.href="http://localhost:3001/login"
+    }
+    componentWillMount(){
+                axios.get("/api/me").then(response => {
+                  if (!response.data) this.setState({
+                      user: null
+                    });
+                  else this.setState({ user: response.data });
+                });
+    }
+    // componentDidMount(){
+
+    // }
     render(){
         return (
         <div>
             <header>
               <nav>
                 <i className="fa fa-cutlery fa-2x" aria-hidden="true" />
-                <button className="pure-button pure-button-primary">
-                  Log In
-                </button>
+                <button onClick={this.handleLogin} className="pure-button pure-button-primary">Log In</button>
               </nav>
             </header>
             <main>
@@ -28,3 +48,9 @@ export default class Home extends Component {
           )
     }
 }
+function mapStateToProps(state) {
+  return {
+    state
+  };
+}
+export default connect( mapStateToProps )( Home );

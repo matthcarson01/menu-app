@@ -1,6 +1,7 @@
 import axios from "axios";
 // Action Constants
 const REQ_USER = "REQ_USER";
+const REQ_RESTAURANT = "REQ_RESTAURANT";
 
 // Action Creators
 export function requestUser() {
@@ -9,11 +10,20 @@ export function requestUser() {
     payload: axios.get("/api/me").then(response => response.data)
   };
 }
-
+export function requestRestaurant(id) {
+  return {
+    type: REQ_RESTAURANT,
+    payload: axios.get(`/api/user_restaurant/${id}`)
+    .then(response => {
+      console.log("Burger response:",response.data)
+    return response.data})
+  };
+}
 // Initial State
 
 const initialState = {
-  user: {}
+  user: {},
+  restaurant: []
 };
 
 // Reducer
@@ -27,6 +37,17 @@ export default function reducer(state = initialState, action) {
         isLoading: false,
         user: action.payload
       });
+    case REQ_RESTAURANT + "_PENDING":
+      return Object.assign({}, state, { isLoading: true });
+    case REQ_RESTAURANT + "_FULFILLED":
+    console.log("case restaurant", action.payload)
+      return Object.assign({}, state, {
+        isLoading: false,
+        restaurant: action.payload
+      });
+    // case REQ_RESTAURANT:
+    //   console.log(action.payload);
+    //   return Object.assign({}, state, { restaurant: action.payload });
     default:
       return state;
   }
