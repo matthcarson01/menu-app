@@ -15,7 +15,6 @@ export function requestRestaurant(id) {
     type: REQ_RESTAURANT,
     payload: axios.get(`/api/user_restaurant/${id}`)
     .then(response => {
-      console.log("Burger response:",response.data)
     return response.data})
   };
 }
@@ -40,7 +39,6 @@ export default function reducer(state = initialState, action) {
     case REQ_RESTAURANT + "_PENDING":
       return Object.assign({}, state, { isLoading: true });
     case REQ_RESTAURANT + "_FULFILLED":
-    console.log("case restaurant", action.payload)
       return Object.assign({}, state, {
         isLoading: false,
         restaurant: action.payload

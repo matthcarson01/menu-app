@@ -83,7 +83,7 @@ app.get("/api/me", function(req, res) {
 });
 
 app.get("/api/user_restaurant/:id",controller.getRestaurant);
-app.put("",)
+app.post("/api/user_restaurant/:id",controller.createRestaurant);
 
 
 app.listen(port, () => {

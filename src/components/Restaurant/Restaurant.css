@@ -1,7 +1,19 @@
 label{
-    display:block;
-    text-align: left;
+    display:flex;
+    flex-flow:row nowrap;
+    justify-content: flex-end;
+    width:100%;
 }
 label span, label input{
-    margin-left:10px;
+    margin:5px 10px;
+   
+}
+form{
+    display: flex;
+    flex-flow:column;
+    align-items: center;
+}
+.Submit-Button{
+    margin:10px;
+    align-self: flex-end;
 }
