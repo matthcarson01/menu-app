@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import axios from 'axios';
 import { connect } from "react-redux";
 
 import RestaurantForm from "../RestaurantForm/RestaurantForm"
+import RestaurantProfile from "../RestaurantProfile/RestaurantProfile"
 import { requestUser, requestRestaurant } from "../../ducks/reducer";
 import "./Restaurant.css";
 
@@ -16,20 +16,15 @@ class Restaurant extends Component {
     this.props.requestUser().then(() => this.props.requestRestaurant(this.props.user.user_id))
   }
 
-  onSubmit(e){
-    e.preventDefault
-  }
-
 
   render() {
-    var restaurant = this.props.restaurant[0];
+    const restaurant = this.props.restaurant[0];
     return (<div>
         {!restaurant && (
           <RestaurantForm/>
         )}
         {restaurant && (
-        <h1>{restaurant.restaurant_name}</h1>
-
+        <RestaurantProfile/>
         )}
       </div>)
   }
