@@ -35,7 +35,6 @@ class RestaurantFrom extends Component {
     }
     onSubmit(e){
         e.preventDefault();
-        console.log('restaurant:',this.state)
         axios
           .post(`/api/user_restaurant/${this.props.user.user_id}`, {
             restaurant_name: this.state.restaurant_name,

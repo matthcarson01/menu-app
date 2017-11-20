@@ -84,6 +84,7 @@ app.get("/api/me", function(req, res) {
 
 app.get("/api/user_restaurant/:id",controller.getRestaurant);
 app.post("/api/user_restaurant/:id",controller.createRestaurant);
+app.put("/api/user_restaurant_edit/:id", controller.editRestaurant);
 
 
 app.listen(port, () => {

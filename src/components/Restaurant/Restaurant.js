@@ -16,7 +16,6 @@ class Restaurant extends Component {
     this.props.requestUser().then(() => this.props.requestRestaurant(this.props.user.user_id))
   }
 
-
   render() {
     const restaurant = this.props.restaurant[0];
     return (<div>
