@@ -10,7 +10,8 @@ const express = require("express"),
 const {connectionString} = require("../keys/config").database;
 const { secret } = require("../keys/config").session;
 const {domain, clientID, clientSecret} = require("../keys/config").auth0;
-const controller = require('./controller/controller');
+const restaurantController = require('./controller/restaurantController');
+const menuController = require('./controller/menuController');
 const port = 3001;
 
 const app = express();
@@ -82,9 +83,11 @@ app.get("/api/me", function(req, res) {
   res.status(200).json(req.user);
 });
 
-app.get("/api/user_restaurant/:id",controller.getRestaurant);
-app.post("/api/user_restaurant/:id",controller.createRestaurant);
-app.put("/api/user_restaurant_edit/:id", controller.editRestaurant);
+app.get("/api/user_restaurant/:id", restaurantController.getRestaurant);
+app.post("/api/user_restaurant/:id", restaurantController.createRestaurant);
+app.put("/api/user_restaurant_edit/:id", restaurantController.editRestaurant);
+app.post("/api/menu_section", menuController.createSection);
+app.post("/api/restaurant_menu", menuController.createMenu);
 
 
 app.listen(port, () => {

@@ -4,6 +4,7 @@ import { Switch, Route, Link } from "react-router-dom";
 import Header from '../Header/Header';
 import Profile from '../Profile/Profile';
 import Restaurant from '../Restaurant/Restaurant';
+import Menu from '../Menu/Menu';
 import './UserProfile.css';
 
 class UserProfile extends Component{
@@ -19,13 +20,14 @@ class UserProfile extends Component{
                 <ul>
                   <li><Link to='user-profile'>User</Link></li>
                   <li><Link to='restaurant'>Restaurant</Link></li>
-                  <li>Menu</li>
+                  <li><Link to='menu'>Menu</Link></li>
                 </ul>
               </nav>
               <main>
                 <Switch>
                   <Route path="/user/user-profile" component={Profile} />
                   <Route path="/user/restaurant" component={Restaurant} />
+                  <Route path="/user/menu" component={Menu} />
                 </Switch>
               </main>
             </div>

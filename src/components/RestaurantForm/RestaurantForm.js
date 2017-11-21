@@ -19,9 +19,8 @@ class RestaurantFrom extends Component {
             phone:'',
             email:'',
             cover_image:null,
-            restaurant_type:''
-            // ,
-            // fireRedirect: false
+            restaurant_type:'',
+            fireRedirect: false
         }
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
