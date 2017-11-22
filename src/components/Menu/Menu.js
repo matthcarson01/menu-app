@@ -1,30 +1,38 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import axios from "axios";
 
 import { requestUser, requestRestaurant } from "../../ducks/reducer";
+import Section from "../Section/Section";
 import SectionAdder from "../SectionAdder/SectionAdder";
 import "./Menu.css";
 
 class Menu extends Component {
   constructor(props) {
     super(props);
-    this.state = {}
+    this.state = {
+
+    }
   }
 
   componentDidMount() {
-    this.props.requestUser().then(() => this.props.requestRestaurant(this.props.user.user_id))
-    //check for menu id
-    //if menu id exist retrieve from redux store
-    //if not create menu id assign restaurant id
+    this.props
+      .requestUser()
+      .then(() => this.props.requestRestaurant(this.props.user.user_id))
+      .then(
+        axios.get(`/api/get_sections/${this.props.restaurant[0].restaurant_id}`)
+            .then(response => {this.setState({sections:response.data})})
+      );
+      // .then(console.log(this.props.user, this.props.restaurant[0]));
   }
 
   render() {
-    const restaurant = this.props.restaurant[0];
-    return(
-      <div>
+    const sections=this.state.sections;
+    return <div>
+        {sections && sections.map(section => <Section id={section.section_id} name={section.section_name}/>)}
+    
         <SectionAdder />
-      </div>
-    )
+      </div>;
   }
 }
 function mapStateToProps(state){

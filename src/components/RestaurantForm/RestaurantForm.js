@@ -27,7 +27,6 @@ class RestaurantFrom extends Component {
     }
     componentDidMount() {
     this.props.requestUser();
-    console.log('user_id:',this.props.user.user_id); 
     }
     onChange(e){
         this.setState({[e.target.name]:e.target.value});

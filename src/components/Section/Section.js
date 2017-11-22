@@ -13,7 +13,9 @@ class Section extends Component {
     render() {
         return (
             <div>
-                
+                <h1>{this.props.name}</h1>
+                <h3>Section ID:{this.props.id}</h3>
+                <button>Delete</button>
             </div>
         );
     }
