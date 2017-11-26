@@ -86,9 +86,18 @@ app.get("/api/me", function(req, res) {
 app.get("/api/user_restaurant/:id", restaurantController.getRestaurant);
 app.post("/api/user_restaurant/:id", restaurantController.createRestaurant);
 app.put("/api/user_restaurant_edit/:id", restaurantController.editRestaurant);
-app.post("/api/menu_section", menuController.createSection);
-app.post("/api/restaurant_menu", menuController.createMenu);
 
+app.post("/api/restaurant_menu", menuController.createMenu);
+app.post("/api/menu_section", menuController.createSection);
+app.get("/api/get_sections/:id", menuController.getSections);
+app.put("/api/update_sections", menuController.updateSection);
+app.delete("/api/delete_section", menuController.deleteSection);
+app.get("/api/items/:id", menuController.getItems);
+
+app.get("/api/item/:id", menuController.getItem);
+app.post("/api/item", menuController.addItem);
+app.put("/api/item", menuController.updateItem);
+app.delete("/app/item/:id", menuController.deleteItem);
 
 app.listen(port, () => {
   console.log(`Port: ${port}`);

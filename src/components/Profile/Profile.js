@@ -5,14 +5,11 @@ import { requestUser } from "../../ducks/reducer";
 import "./Profile.css";
 
 class Profile extends Component {
-  constructor(props) {
-    super(props);
-  }
+  // constructor(props) {
+  //   super(props);
+  // }
   componentDidMount() {
     this.props.requestUser();  
-  }
-  componentDidUpdate(){
-      console.log('User Object',this.props.user)
   }
   render() {
     return <div>

@@ -38,7 +38,8 @@ class SectionAdder extends Component {
   onSubmit(e) {
     e.preventDefault();
     axios.post(`/api/menu_section`, {section_name: this.state.section_name})
-        .then(response=>this.setState({section_id:response.data[0].section_id}));
+        .then(response=>this.setState({section_id:response.data[0].section_id}))
+        .then(this.props.updateState(5));
     };
    
     //create section based on menu id
