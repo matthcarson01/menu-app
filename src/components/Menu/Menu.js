@@ -30,6 +30,8 @@ class Menu extends Component {
 
   render() {
     const sections=this.props.sections;
+    let restaurant = {};
+    this.props.restaurant[0]?restaurant=this.props.restaurant[0]:restaurant={};
     return <div>
         {sections && sections.map(section => (
             <Section
@@ -38,7 +40,7 @@ class Menu extends Component {
               key={section.section_id}
             />
           ))}
-        <SectionAdder updateState={i=>this.setState({index:this.state.index+i})}/>
+        <SectionAdder userId={this.props.user.user_id} restaurantId={restaurant.restaurant_id} updateState={i=>this.setState({index:this.state.index+i})}/>
       </div>;
   }
 }

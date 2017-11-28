@@ -8,6 +8,7 @@
     "cors": "^2.8.4",
     "express": "^4.16.2",
     "express-session": "^1.15.6",
+    "firebase": "^4.6.2",
     "massive": "^4.5.0",
     "passport": "^0.4.0",
     "passport-auth0": "^0.6.0",

@@ -1,0 +1,17 @@
+.itemImage{
+    height: 200px;
+    width:auto;
+}
+.menuItem{
+    width:500px;
+    border: 2px solid rgb(31, 31, 31);
+    padding: 10px;
+    margin:10px;
+    display:flex;
+    flex-flow:row wrap;
+    justify-content: center;
+    
+}
+.menuItem h1{
+    width:50%;
+}

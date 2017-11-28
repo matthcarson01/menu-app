@@ -1,0 +1,9 @@
+.menuFlex{
+    display: flex;
+    flex-flow: column wrap;
+    width: 65vw;
+    align-items: center;
+}
+.menuFlex button{
+    width:100px;
+}

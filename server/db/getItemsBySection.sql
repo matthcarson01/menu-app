@@ -1,1 +1,3 @@
-SELECT * FROM menu_items WHERE section_id = $1;
+SELECT * FROM menu_items 
+WHERE section_id = $1
+RETURNING *;

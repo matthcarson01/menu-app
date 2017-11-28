@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import axios from "axios";
+import { connect } from "react-redux";
 
-import { requestUser, requestRestaurant, requestSections } from "../../ducks/reducer";
+import firebase from "../../firebase";
+import { requestUser, requestRestaurant, requestSections, addItems } from "../../ducks/reducer";
 
 class ItemAdder extends Component {
   constructor(props) {
@@ -10,80 +12,108 @@ class ItemAdder extends Component {
       item_name: "",
       item_description: "",
       item_image: "",
-      item_price: 0
+      item_price: 0,
+      file: "",
+      imagePreviewUrl: "",
+      downloadURL: ""
     };
     this.handleChange = this.handleChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.processImageUpload = this.processImageUpload.bind(this);
   }
 
-
-  handleChange(e){
+  handleChange(e) {
     this.setState({ [e.target.name]: e.target.value });
   }
+
   onSubmit(e) {
     e.preventDefault();
-    axios
-      .post("/api/item", {
-        section_id: this.props.section_id,
-        item_name: this.state.item_name,
-        item_description: this.state.item_description,
-        item_image: this.state.item_image,
-        item_price: this.state.item_price
-      })
-      .then(this.setState({
-          item_name: "",
-          item_description: "",
-          item_image: "",
-          item_price: 0
-        }));
+    let that = this;
+    let file = this.state.file;
+    const storageRef = firebase.storage().ref();
+    const uploadTask = storageRef.child("profilePictures/" + file.name).put(file);
+    uploadTask.on("state_changed", snapshot => {}, function(error) {}, function() {
+        console.log(uploadTask.snapshot.downloadURL);
+        that.setState({ downloadURL: uploadTask.snapshot.downloadURL });
+        console.log(that.state.downloadURL);
+        that.props
+          .addItems({
+            section_id: that.props.section_id,
+            item_name: that.state.item_name,
+            item_description: that.state.item_description,
+            item_image: uploadTask.snapshot.downloadURL,
+            item_price: that.state.item_price
+          })
+          .then(that.setState({
+              item_name: "",
+              item_description: "",
+              item_image: "",
+              item_price: 0
+            }))
+          .then(that.props.updateState(5));
+
+      });
+  }
+
+  processImageUpload(event) {
+    event.preventDefault();
+
+    let reader = new FileReader();
+    let file = event.target.files[0];
+    reader.onloadend = () => {
+      this.setState({
+        file: file,
+        imagePreviewUrl: reader.result
+      });
+    };
+    reader.readAsDataURL(file);
   }
 
   render() {
-    return (
-      <form onSubmit={this.onSubmit}>
+
+    let imagePreview = null;
+    let downloadURL = null;
+
+    if (this.state.imagePreviewUrl) {
+      imagePreview = <img src={this.state.imagePreviewUrl} className="image-preview" />;
+    }
+
+    if (this.state.downloadURL) {
+      downloadURL = <h1> {this.state.downloadURL} </h1>;
+    }
+
+    return <form onSubmit={this.onSubmit}>
         <lable>
           Item Name:
-          <input
-            type="text"
-            name="item_name"
-            value={this.state.value}
-            onChange={this.handleChange}
-          />
+          <input type="text" name="item_name" value={this.state.value} onChange={this.handleChange} />
         </lable>
         <lable>
           Item Description:
-          <textarea
-            name="item_description"
-            value={this.state.value}
-            onChange={this.handleChange}
-          />
+          <textarea name="item_description" value={this.state.value} onChange={this.handleChange} />
         </lable>
         <lable>
           Item Image:
-          <input
-            type="url"
-            name="item_image"
-            value={this.state.value}
-            onChange={this.handleChange}
-          />
+          {imagePreview}
+          <input type="file" name="item_image" onChange={event => {this.processImageUpload(event)}} alt="preview image" />
         </lable>
         <lable>
           Item Price:
-          <input
-            type="number"
-            min="1"
-            step="any"
-            name="item_price"
-            value={this.state.value}
-            onChange={this.handleChange}
-          />
+          <input type="number" min="1" step="any" name="item_price" value={this.state.value} onChange={this.handleChange} />
         </lable>
         <button type="submit" value="Submit">
           Add
         </button>
-      </form>
-    );
+      </form>;
   }
 }
 
-export default ItemAdder;
+function mapStateToProps(state){
+  return {
+    restaurant: state.restaurant,
+    user: state.user,
+    sections: state.sections,
+    item: state.item
+  }
+}
+
+export default connect(mapStateToProps, { requestUser, requestRestaurant, requestSections, addItems })(ItemAdder);
