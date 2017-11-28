@@ -49,7 +49,7 @@ module.exports = {
         const dbInstance = req.app.get("db");
         dbInstance
             .getItem([req.params.id])
-            .then(item=>{res.status(200).send(items)})
+            .then(item=>{res.status(200).send(item)})
             .catch(e=>console.log(e));
     },
     addItem:(req,res,next)=>{

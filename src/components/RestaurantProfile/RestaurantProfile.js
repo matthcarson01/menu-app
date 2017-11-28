@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import axios from "axios";
 
 import firebase from "../../firebase";
 import { requestUser, requestRestaurant, editRestaurant } from "../../ducks/reducer";
@@ -122,9 +121,9 @@ class RestaurantProfile extends Component {
   render(){
     const restaurant = this.props.restaurant[0];
     let imagePreview = null;
-    let downloadURL = null;
-    if (this.state.imagePreviewUrl) {imagePreview = (<img src={this.state.imagePreviewUrl} className = "image-preview CoverImage" />)};
-    if (this.state.downloadURL) {downloadURL = (<h1> {this.state.downloadURL} </h1>)};
+    // let downloadURL = null;
+    if (this.state.imagePreviewUrl) {imagePreview = (<img src={this.state.imagePreviewUrl} className = "image-preview CoverImage" alt="Cover"/>)};
+    // if (this.state.downloadURL) {downloadURL = (<h1> {this.state.downloadURL} </h1>)};
     return (
       <div>
         <button onClick={this.showForm}>Edit</button>
@@ -153,7 +152,7 @@ class RestaurantProfile extends Component {
               Type:<span>{this.state.restaurant_type}</span>
             </div>
             <div>
-              Cover Image:<img src={this.state.cover_image} alt="cover image not showing" className="CoverImage"/>
+              Cover Image:<img src={this.state.cover_image} alt="cover not showing" className="CoverImage"/>
             </div>
           </section>
         }

@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import axios from "axios";
 
 import { requestUser, requestRestaurant, requestSections } from "../../ducks/reducer";
 import Section from "../Section/Section";
@@ -21,17 +20,18 @@ class Menu extends Component {
       .then(() => this.props.requestRestaurant(this.props.user.user_id))
       .then(()=>this.props.requestSections(this.props.restaurant[0].restaurant_id))
   }
-  componetDidUpdate(prevProps, prevState){
-    if(prevState.index !== this.state.index){
-      console.log("It worked");
-      this.props.requestSections(this.props.restaurant[0].restaurant_id);
-    }
-  }
+
 
   render() {
+    if (this.state.index > 0) {
+      this.props
+        .requestSections(this.props.restaurant[0].restaurant_id)
+        .then(response => this.setState({ index: 0 }));
+    }
     const sections=this.props.sections;
     let restaurant = {};
     this.props.restaurant[0]?restaurant=this.props.restaurant[0]:restaurant={};
+
     return <div>
         {sections && sections.map(section => (
             <Section

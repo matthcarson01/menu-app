@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import axios from "axios";
 
 import Item from "../Item/Item";
 import ItemAdder from "../ItemAdder/ItemAdder";
@@ -15,20 +14,17 @@ class Section extends Component {
       index: 0
     };
   }
-  //componentdidmount that gets all menu items
-  componentDidMount() {
-    this.props
-      .requestItems(this.props.id)
-      .then(response => this.setState({ items: this.props.items }));
-  }
 
-  //onclick that deletes the section from database
+  componentDidMount() {
+    this.props.requestItems(this.props.id)
+              .then(response => this.setState({ items: this.props.items }));
+  }
 
   render() {
     const items = this.state.items;
     //update on submit from ItemAdder
     if(this.state.index > 0){
-      console.log("Hey That worked")
+      console.log()
       this.props
         .requestItems(this.props.id)
         .then(response => this.setState({ items: this.props.items, index: 0 }));

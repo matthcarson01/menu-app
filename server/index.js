@@ -77,6 +77,10 @@ app.get(
     successRedirect: "http://localhost:3000/user/user-profile"
   })
 );
+app.get("/logout",function(req, res){
+  req.logout();
+  res.redirect("http://localhost:3000/");
+});
 
 app.get("/api/me", function(req, res) {
   if (!req.user) return res.status(404);

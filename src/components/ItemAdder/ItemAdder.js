@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import axios from "axios";
 import { connect } from "react-redux";
 
 import firebase from "../../firebase";
@@ -72,14 +71,10 @@ class ItemAdder extends Component {
   render() {
 
     let imagePreview = null;
-    let downloadURL = null;
+
 
     if (this.state.imagePreviewUrl) {
-      imagePreview = <img src={this.state.imagePreviewUrl} className="image-preview" />;
-    }
-
-    if (this.state.downloadURL) {
-      downloadURL = <h1> {this.state.downloadURL} </h1>;
+      imagePreview = <img src={this.state.imagePreviewUrl} className="image-preview" alt="preview"/>;
     }
 
     return <form onSubmit={this.onSubmit}>
