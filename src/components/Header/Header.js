@@ -13,12 +13,6 @@ export default class Header extends Component {
     return <header className="main-header">
         <nav className="main-nav">
           <i className="fa fa-cutlery fa-2x" aria-hidden="true" />
-          <div className="search">
-            <input type="text" className="searchTerm" placeholder="City Or State" />
-            <button type="submit" className="searchButton">
-              <i className="fa fa-search" />
-            </button>
-          </div>
           <button  onClick={this.handleLogout} className="pure-button pure-button-primary">
             Log Out
           </button>

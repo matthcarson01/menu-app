@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-
+import { Button, Container, Grid, Header, Menu, Icon, Input, Segment } from "semantic-ui-react";
 
 import {connect} from 'react-redux';
 import './Home.css';
@@ -28,24 +28,25 @@ class Home extends Component {
 
     // }
     render(){
-        return (
-        <div>
-            <header>
-              <nav>
-                <i className="fa fa-cutlery fa-2x" aria-hidden="true" />
-                <button onClick={this.handleLogin} className="pure-button pure-button-primary">Log In</button>
-              </nav>
-            </header>
-            <main>
-                <div className="search">
-                    <input type="text" className="searchTerm" placeholder="City Or State"/>
-                    <button type="submit" className="searchButton">
-                    <i className="fa fa-search"></i>
-                    </button>
-                </div>
-            </main>
-          </div>
-          )
+        return <div>
+            <Segment textAlign="Center" padded vertical>
+              <Container>
+                <Menu inverted secondary size="large">
+                  <Menu.Header>
+                    <Icon name="food" size="huge" />
+                  </Menu.Header>
+                  <Menu.Item position="right">
+                    <Button as="a" onClick={this.handleLogin} content="Log In" as="a" primary />
+                  </Menu.Item>
+                </Menu>
+              </Container>
+            </Segment>
+            <Grid textAlign="center" style={{ height: "70vh" }} verticalAlign="middle">
+              <Grid.Column style={{ maxWidth: 450 }}>
+                <Input fluid icon="search" iconPosition="left" placeholder="City, State, or Zipcode" />
+              </Grid.Column>
+            </Grid>
+          </div>;
     }
 }
 function mapStateToProps(state) {
