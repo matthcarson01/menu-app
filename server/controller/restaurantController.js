@@ -9,11 +9,17 @@ module.exports = {
     },
     getRestaurants: (req,res,next) => {
         const dbInstance = req.app.get('db');
-        console.log("query",req.query);
         dbInstance.getRestaurants([req.query.city, req.query.type])
                 .then(restaurants => {
                     res.status(200).send(restaurants)
                     })
+                .catch(()=> (console.log));
+    },
+    getRestaurantByUrl: (req,res,next) => {
+        const dbInstance = req.app.get('db');
+        console.log("params", req.params);
+        dbInstance.getRestaurantByUrl([req.params.url])
+                .then(restaurant => {res.status(200).send(restaurant)})
                 .catch(()=> (console.log));
     },
     createRestaurant:(req,res,next)=>{

@@ -5,6 +5,7 @@ const REQ_USER = "REQ_USER",
   REQ_RESTAURANTS = "REQ_RESTAURANTS",
   REQ_SECTIONS = "REQ_SECTIONS",
   REQ_ITEMS = "REQ_ITEMS",
+  REQ_PAGE = "REQ_PAGE",
   EDIT_RESTAURANT = "EDIT_RESTAURANT",
   ADD_ITEMS = "ADD_ITEMS";
 
@@ -14,6 +15,13 @@ export function requestUser() {
   return {
     type: REQ_USER,
     payload: axios.get("/api/me")
+                  .then(response => response.data)
+  };
+}
+export function requestPage(url) {
+  return {
+    type: REQ_PAGE,
+    payload: axios.get(`/api/restaurant/${url}`)
                   .then(response => response.data)
   };
 }
@@ -120,7 +128,7 @@ export default function reducer(state = initialState, action) {
     case REQ_RESTAURANTS + "_PENDING":
       return Object.assign({}, state, { isLoading: true });
     case REQ_RESTAURANTS + "_FULFILLED":
-      console.log('REQ_RESTAURANTS RAN',action.payload);
+      console.log("REQ_RESTAURANTS RAN", action.payload);
       return Object.assign({}, state, {
         isLoading: false,
         restaurants: action.payload
@@ -128,6 +136,13 @@ export default function reducer(state = initialState, action) {
     case REQ_RESTAURANT + "_PENDING":
       return Object.assign({}, state, { isLoading: true });
     case REQ_RESTAURANT + "_FULFILLED":
+      return Object.assign({}, state, {
+        isLoading: false,
+        restaurant: action.payload
+      });
+    case REQ_PAGE + "_PENDING":
+      return Object.assign({}, state, { isLoading: true });
+    case REQ_PAGE + "_FULFILLED":
       return Object.assign({}, state, {
         isLoading: false,
         restaurant: action.payload
