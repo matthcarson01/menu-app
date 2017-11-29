@@ -90,6 +90,7 @@ app.get("/api/me", function(req, res) {
 app.get("/api/user_restaurant/:id", restaurantController.getRestaurant);
 app.post("/api/user_restaurant/:id", restaurantController.createRestaurant);
 app.put("/api/user_restaurant_edit/:id", restaurantController.editRestaurant);
+app.get("/api/restaurants",restaurantController.getRestaurants);
 
 app.post("/api/restaurant_menu", menuController.createMenu);
 app.post("/api/menu_section", menuController.createSection);

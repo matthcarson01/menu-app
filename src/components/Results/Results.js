@@ -1,29 +1,49 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { Item } from "semantic-ui-react";
+
+import { requestRestaurants } from "../../ducks/reducer";
 import "./Results.css";
 
-export default class Results extends Component {
+class Results extends Component {
     // constructor(props){
     //     super(props);
     // }
+    componentWillMount(){
+        let {city,type} = this.props.match.params;
+        this.props.requestRestaurants({city,type});
+    }
     render(){
+        const restaurants = this.props.restaurants;
         return(
             <div>
-                <header>
-                    <nav>
-                        <i className="fa fa-cutlery fa-2x" aria-hidden="true"></i>
-                        <div className="search">
-                            <input type="text" className="searchTerm" placeholder="City Or State"/>
-                            <button type="submit" className="searchButton">
-                                <i className="fa fa-search"></i>
-                            </button>
-                        </div>
-                        <button className="pure-button pure-button-primary">Log In</button>
-                    </nav>
-                </header>
                 <main>
-
+                    <h1>Test</h1>
+                    <Item.Group>
+                        {restaurants.map(restaurant=>
+                                <Item>
+                                <Item.Image size='small' src={restaurant.cover_image} />
+                                <Item.Content>
+                                    <Item.Header as='a'>{restaurant.restaurant_name}</Item.Header>
+                                    <Item.Description>
+                                    <p>{restaurant.address}</p>
+                                    <p>{restaurant.city}</p>
+                                    <p>{restaurant.state}</p>
+                                    </Item.Description>
+                                </Item.Content>
+                                </Item>
+                        )}
+                    </Item.Group>
+                    
                 </main>
             </div>
         )
     }
 }
+function mapStateToProps(state){
+  return {
+    restaurants: state.restaurants
+  }
+}
+
+export default connect(mapStateToProps, {requestRestaurants})(Results);

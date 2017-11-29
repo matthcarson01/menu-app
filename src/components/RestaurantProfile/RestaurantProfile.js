@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { Button, Header, Icon, Modal } from "semantic-ui-react";
 
 import firebase from "../../firebase";
 import { requestUser, requestRestaurant, editRestaurant } from "../../ducks/reducer";
@@ -125,10 +126,9 @@ class RestaurantProfile extends Component {
     if (this.state.imagePreviewUrl) {imagePreview = (<img src={this.state.imagePreviewUrl} className = "image-preview CoverImage" alt="Cover"/>)};
     // if (this.state.downloadURL) {downloadURL = (<h1> {this.state.downloadURL} </h1>)};
     return (
-      <div>
+    <div>
         <button onClick={this.showForm}>Edit</button>
-        {!this.state.editForm && 
-        <section>
+        {!this.state.editForm && <section>
             <h1>{restaurant.restaurant_name}</h1>
             <div>
               Name:<span>{this.state.restaurant_name}</span>
@@ -152,57 +152,54 @@ class RestaurantProfile extends Component {
               Type:<span>{this.state.restaurant_type}</span>
             </div>
             <div>
-              Cover Image:<img src={this.state.cover_image} alt="cover not showing" className="CoverImage"/>
+              Cover Image:<img src={this.state.cover_image} alt="cover not showing" className="CoverImage" />
             </div>
-          </section>
-        }
-        {this.state.editForm && 
-          <form onSubmit={this.onSubmit}>
-              <h1>{restaurant.restaurant_name}</h1>
-              <div className="form-group">
-                <label>
-                  Name:
-                  <input type="text" name="restaurant_name" value={this.state.restaurant_name} onChange={this.onChange} />
-                </label>
-                <label>
-                  Address:
-                  <input type="text" name="address" value={this.state.address} onChange={this.onChange} />
-                </label>
-                <label>
-                  City:
-                  <input type="text" name="city" value={this.state.city} onChange={this.onChange} />
-                </label>
-                <label>
-                  State:
-                  <input type="text" name="state" value={this.state.state} onChange={this.onChange} />
-                </label>
-                <label>
-                  Zip:
-                  <input type="number" name="zip" value={this.state.zip} onChange={this.onChange} />
-                </label>
-                <label>
-                  Phone:
-                  <input type="text" name="phone" value={this.state.phone} onChange={this.onChange} />
-                </label>
-                <label>
-                  Email:
-                  <input type="text" name="email" value={this.state.email} onChange={this.onChange} />
-                </label>
-                <label>
-                  Restaurant Type:
-                  <input type="text" name="restaurant_type" value={this.state.restaurant_type} onChange={this.onChange} />
-                </label>
-                <label>
-                  {imagePreview}
-                  <input type="file" onChange={(event) => {this.processImageUpload(event)}} alt="preview image" />
-                </label>
-                <input type="submit" value="Submit" className="Submit-Button" />
-              </div>
-            </form>
-        }
-
-      </div>
-    )
+          </section>}
+        {this.state.editForm && <form onSubmit={this.onSubmit}>
+            <h1>{restaurant.restaurant_name}</h1>
+            <div className="form-group">
+              <label>
+                Name:
+                <input type="text" name="restaurant_name" value={this.state.restaurant_name} onChange={this.onChange} />
+              </label>
+              <label>
+                Address:
+                <input type="text" name="address" value={this.state.address} onChange={this.onChange} />
+              </label>
+              <label>
+                City:
+                <input type="text" name="city" value={this.state.city} onChange={this.onChange} />
+              </label>
+              <label>
+                State:
+                <input type="text" name="state" value={this.state.state} onChange={this.onChange} />
+              </label>
+              <label>
+                Zip:
+                <input type="number" name="zip" value={this.state.zip} onChange={this.onChange} />
+              </label>
+              <label>
+                Phone:
+                <input type="text" name="phone" value={this.state.phone} onChange={this.onChange} />
+              </label>
+              <label>
+                Email:
+                <input type="text" name="email" value={this.state.email} onChange={this.onChange} />
+              </label>
+              <label>
+                Restaurant Type:
+                <input type="text" name="restaurant_type" value={this.state.restaurant_type} onChange={this.onChange} />
+              </label>
+              <label>
+                {imagePreview}
+                <input type="file" onChange={event => {
+                    this.processImageUpload(event);
+                  }} alt="preview image" />
+              </label>
+              <input type="submit" value="Submit" className="Submit-Button" />
+            </div>
+          </form>}
+      </div>)
   }
 }
 

@@ -1,37 +1,53 @@
 import React, { Component } from 'react';
 import { Switch, Route, Link } from "react-router-dom";
+import { Grid, Icon, Menu, Segment } from "semantic-ui-react";
 
-import Header from '../Header/Header';
+import HeaderBar from '../HeaderBar/HeaderBar';
 import Profile from '../Profile/Profile';
 import Restaurant from '../Restaurant/Restaurant';
-import Menu from '../Menu/Menu';
+import RestaurantMenu from "../RestaurantMenu/RestaurantMenu";
 import './UserProfile.css';
 
 class UserProfile extends Component{
-
+  constructor(props){
+    super(props);
+    this.state = { activeItem: "user" };
+    this.handleItemClick=this.handleItemClick.bind(this);
+  }
+  handleItemClick = (e, { name }) => this.setState({ activeItem: name })
     render(){
-        return <div className="flex-container">
-            <Header />
-            <div className="flex-container box-eighty">
-              <header className="profile-header">
-                <h3>User Settings</h3>
-              </header>
-              <nav className="profile-nav">
-                <ul>
-                  <li><Link to='user-profile'>User</Link></li>
-                  <li><Link to='restaurant'>Restaurant</Link></li>
-                  <li><Link to='menu'>Menu</Link></li>
-                </ul>
-              </nav>
-              <main>
-                <Switch>
-                  <Route path="/user/user-profile" component={Profile} />
-                  <Route path="/user/restaurant" component={Restaurant} />
-                  <Route path="/user/menu" component={Menu} />
-                </Switch>
-              </main>
-            </div>
-          </div>;
+      const { activeItem } = this.state;
+        return (<div>
+            <HeaderBar />
+            <Menu attached="top">
+              <Menu.Header><Icon name="wrench" size="big"/>User Settings</Menu.Header>
+            </Menu>
+            <Grid>
+              <Grid.Column width={4}>
+                <Menu fluid vertical tabular>
+                  <Link to="user-profile">
+                    <Menu.Item name="user" active={activeItem === "user"} onClick={this.handleItemClick} />
+                  </Link>
+                  <Link to="restaurant">
+                    <Menu.Item name="restaurant" active={activeItem === "restaurant"} onClick={this.handleItemClick} />
+                  </Link>
+                  <Link to="menu">
+                    <Menu.Item name="menu" active={activeItem === "menu"} onClick={this.handleItemClick} />
+                  </Link>
+                </Menu>
+              </Grid.Column>
+
+              <Grid.Column stretched width={12}>
+                <Segment style={{ width: "65vw" }}>
+                  <Switch>
+                    <Route path="/user/user-profile" component={Profile} />
+                    <Route path="/user/restaurant" component={Restaurant} />
+                    <Route path="/user/menu" component={RestaurantMenu} />
+                  </Switch>
+                </Segment>
+              </Grid.Column>
+            </Grid>
+          </div>)
     }
 }
 export default UserProfile;

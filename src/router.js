@@ -8,7 +8,7 @@ import UserProfile from './components/UserProfile/UserProfile';
 export default (
   <Switch>
     <Route exact path='/' component={Home} />
-    <Route path='/results' component={Results} />
+    <Route path='/results/:city/:type' component={Results} />
     <Route path='/user' component={UserProfile} />
   </Switch>
 );

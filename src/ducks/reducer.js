@@ -1,11 +1,12 @@
 import axios from "axios";
 // Action Constants
 const REQ_USER = "REQ_USER",
-      REQ_RESTAURANT = "REQ_RESTAURANT",
-      REQ_SECTIONS = "REQ_SECTIONS",
-      REQ_ITEMS = "REQ_ITEMS",
-      EDIT_RESTAURANT = "EDIT_RESTAURANT",
-      ADD_ITEMS = "ADD_ITEMS";
+  REQ_RESTAURANT = "REQ_RESTAURANT",
+  REQ_RESTAURANTS = "REQ_RESTAURANTS",
+  REQ_SECTIONS = "REQ_SECTIONS",
+  REQ_ITEMS = "REQ_ITEMS",
+  EDIT_RESTAURANT = "EDIT_RESTAURANT",
+  ADD_ITEMS = "ADD_ITEMS";
 
 
 // Action Creators
@@ -13,6 +14,14 @@ export function requestUser() {
   return {
     type: REQ_USER,
     payload: axios.get("/api/me")
+                  .then(response => response.data)
+  };
+}
+export function requestRestaurants(terms) {
+  let{city,type}=terms;
+  return {
+    type: REQ_RESTAURANTS,
+    payload: axios.get(`/api/restaurants?city=${city}&type=${type}`)
                   .then(response => response.data)
   };
 }
@@ -93,7 +102,8 @@ const initialState = {
   restaurant: [],
   sections:[],
   items:[],
-  item:{}
+  item:{},
+  restaurants:[],
 };
 
 // Reducer
@@ -106,6 +116,14 @@ export default function reducer(state = initialState, action) {
       return Object.assign({}, state, {
         isLoading: false,
         user: action.payload
+      });
+    case REQ_RESTAURANTS + "_PENDING":
+      return Object.assign({}, state, { isLoading: true });
+    case REQ_RESTAURANTS + "_FULFILLED":
+      console.log('REQ_RESTAURANTS RAN',action.payload);
+      return Object.assign({}, state, {
+        isLoading: false,
+        restaurants: action.payload
       });
     case REQ_RESTAURANT + "_PENDING":
       return Object.assign({}, state, { isLoading: true });
@@ -124,7 +142,7 @@ export default function reducer(state = initialState, action) {
     case REQ_ITEMS + "_PENDING":
       return Object.assign({}, state, { isLoading: true });
     case REQ_ITEMS + "_FULFILLED":
-      console.log("REQ_ITEMS:",action.payload);
+      console.log("REQ_ITEMS:", action.payload);
       return Object.assign({}, state, {
         isLoading: false,
         items: action.payload

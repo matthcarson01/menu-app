@@ -7,6 +7,15 @@ module.exports = {
                     })
                 .catch(()=> (console.log));
     },
+    getRestaurants: (req,res,next) => {
+        const dbInstance = req.app.get('db');
+        console.log("query",req.query);
+        dbInstance.getRestaurants([req.query.city, req.query.type])
+                .then(restaurants => {
+                    res.status(200).send(restaurants)
+                    })
+                .catch(()=> (console.log));
+    },
     createRestaurant:(req,res,next)=>{
         const dbInstance = req.app.get('db');
         const user_id = req.params.id;

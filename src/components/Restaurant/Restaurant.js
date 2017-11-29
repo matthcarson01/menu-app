@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
+
 import RestaurantForm from "../RestaurantForm/RestaurantForm"
 import RestaurantProfile from "../RestaurantProfile/RestaurantProfile"
 import { requestUser, requestRestaurant } from "../../ducks/reducer";
@@ -18,14 +19,16 @@ class Restaurant extends Component {
 
   render() {
     const restaurant = this.props.restaurant[0];
-    return (<div>
+    return (
+    <div>
         {!restaurant && (
           <RestaurantForm/>
         )}
         {restaurant && (
         <RestaurantProfile/>
         )}
-      </div>)
+      </div>
+      )
   }
 }
 function mapStateToProps(state){
