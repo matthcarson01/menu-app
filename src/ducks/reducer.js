@@ -157,7 +157,6 @@ export default function reducer(state = initialState, action) {
     case REQ_ITEMS + "_PENDING":
       return Object.assign({}, state, { isLoading: true });
     case REQ_ITEMS + "_FULFILLED":
-      console.log("REQ_ITEMS:", action.payload);
       return Object.assign({}, state, {
         isLoading: false,
         items: action.payload
