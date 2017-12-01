@@ -24,6 +24,7 @@ class RestaurantMenu extends Component {
   }
 
   render() {
+    console.log(this.props.sections);
     if (this.state.index > 0) {
       this.props
         .requestSections(this.props.restaurant[0].restaurant_id)

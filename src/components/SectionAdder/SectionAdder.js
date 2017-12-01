@@ -33,7 +33,7 @@ class SectionAdder extends Component {
   }
   onSubmit(e) {
     e.preventDefault();
-    axios.post(`/api/menu_section`, {section_name: this.state.section_name})
+    axios.post(`/api/menu_section`, {section_name: this.state.section_name,restaurant_id:this.state.restaurant_id})
         .then(response=>this.setState({section_id:response.data[0].section_id}))
         .then(this.props.updateState(5));
     };

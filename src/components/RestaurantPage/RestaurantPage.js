@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import {
   Button,
+  Card,
   Container,
   Divider,
   Grid,
@@ -12,6 +13,7 @@ import {
   Menu,
   Rail,
   Segment,
+  Sticky,
   Visibility
 } from "semantic-ui-react";
 
@@ -26,21 +28,24 @@ class RestaurantPage extends Component {
     super(props);
     this.state = {
     };
-
+    this.handleContextRef=this.handleContextRef.bind(this);
   }
 
   componentWillMount() {
     let { restaurantURL } = this.props.match.params;
-    this.props.requestPage(restaurantURL).then(() =>
-        this.props.requestSections(this.props.restaurant[0].restaurant_id));
+    this.props.requestPage(restaurantURL)
+            .then(() =>this.props.requestSections(this.props.restaurant[0].restaurant_id));
   }
+
+  handleContextRef = contextRef => this.setState({ contextRef })
 
   render() {
     const restaurant = this.props.restaurant[0];
     const sections = this.props.sections;
+    const { contextRef } = this.state;
 
     return <div>
-        {restaurant && <div>
+        {restaurant && <div ref={this.handleContextRef}>
             <Segment inverted textAlign="center" style={{ backgroundImage: "url(" + restaurant.cover_image + ")", backgroundSize: "cover", minHeight: "50vh", padding: "1em 0em" }} padded="very" vertical>
               <Container text>
                 <Header as="h1" content={restaurant.restaurant_name} style={{ margin: "25% 0" }} inverted />
@@ -52,19 +57,20 @@ class RestaurantPage extends Component {
                         <Segment><Header as='h2' content='Menu'/></Segment>
                         {sections.map(section=>(
                             <PageItem section={section}/>
-                        //  <Segment.Group basic>
-                        //     <Header as='h3' dividing style={{padding:"1em"}}>{section.section_name}</Header>
-                        //     <Segment basic>Item One</Segment>
-                        //     <Segment basic>Item Two</Segment>
-                        //     <Segment basic>Item Three</Segment>
-                        // </Segment.Group>
                         ))}
                     </Segment.Group>
                 </Grid.Column>
                 <Grid.Column  width={4}>
-                    {/* <Rail> */}
-                    <Segment>Right Rail Content</Segment>
-                    {/* </Rail> */}
+                    <Sticky context={contextRef}>
+                        <Card>
+                            <Card.Content header={restaurant.restaurant_name} />
+                            <Card.Content>
+                                <Card.Meta>Address</Card.Meta>
+                                <Card.Description>{restaurant.address}</Card.Description>
+                                <Card.Description>{restaurant.city},{restaurant.state}</Card.Description>
+                            </Card.Content>
+                        </Card>
+                    </Sticky>
                 </Grid.Column>
             </Grid>
           </div>}

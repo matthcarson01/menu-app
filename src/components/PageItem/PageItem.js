@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import {Header,Segment,Item,Image} from "semantic-ui-react";
+import {Header,Segment,Item} from "semantic-ui-react";
 
 import { requestItems } from "../../ducks/reducer";
 

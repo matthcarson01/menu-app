@@ -96,9 +96,10 @@ app.get("/api/restaurant/:url", restaurantController.getRestaurantByUrl);
 app.post("/api/restaurant_menu", menuController.createMenu);
 app.post("/api/menu_section", menuController.createSection);
 app.get("/api/get_sections/:id", menuController.getSections);
-app.put("/api/update_sections", menuController.updateSection);
-app.delete("/api/delete_section", menuController.deleteSection);
+app.put("/api/section", menuController.updateSection);
+app.delete("/api/section/:id", menuController.deleteSection);
 app.get("/api/items/:id", menuController.getItems);
+app.delete("/api/items/:id",menuController.deleteItems);
 
 app.get("/api/item/:id", menuController.getItem);
 app.post("/api/item", menuController.addItem);

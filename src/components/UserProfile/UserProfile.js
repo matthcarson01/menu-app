@@ -25,15 +25,27 @@ class UserProfile extends Component{
             <Grid>
               <Grid.Column width={4}>
                 <Menu fluid vertical tabular>
-                  <Link to="user-profile">
-                    <Menu.Item name="user" active={activeItem === "user"} onClick={this.handleItemClick} />
-                  </Link>
-                  <Link to="restaurant">
-                    <Menu.Item name="restaurant" active={activeItem === "restaurant"} onClick={this.handleItemClick} />
-                  </Link>
-                  <Link to="menu">
-                    <Menu.Item name="menu" active={activeItem === "menu"} onClick={this.handleItemClick} />
-                  </Link>
+                  <Menu.Item 
+                    name="user"
+                    as = { Link }
+                    to="user-profile"
+                    active={activeItem === "user"} 
+                    onClick={this.handleItemClick} 
+                  />
+                  <Menu.Item 
+                    name="restaurant" 
+                    as ={Link} 
+                    to = "restaurant" 
+                    active={activeItem === "restaurant"} 
+                    onClick={this.handleItemClick} 
+                  />
+                  <Menu.Item 
+                    name="menu" 
+                    as = {Link} 
+                    to="menu" 
+                    active={activeItem === "menu"} 
+                    onClick={this.handleItemClick} 
+                  />
                 </Menu>
               </Grid.Column>
 

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Item } from "semantic-ui-react";
+import { Link } from "react-router-dom";
 import HeaderBar from "../HeaderBar/HeaderBar";
 
 import { requestRestaurants } from "../../ducks/reducer";
@@ -20,12 +21,12 @@ class Results extends Component {
             <HeaderBar />
             <main>
               <h1>Test</h1>
-              {restaurants.length<=0 && <h3>No Results</h3>}
+              {restaurants.length <= 0 && <h3>No Results</h3>}
               <Item.Group>
                 {restaurants.map(restaurant => <Item>
                     <Item.Image size="small" src={restaurant.cover_image} />
                     <Item.Content>
-                      <Item.Header as="a">
+                      <Item.Header as={Link} to={`/eat/${restaurant.restaurant_url}`}>
                         {restaurant.restaurant_name}
                       </Item.Header>
                       <Item.Description>
