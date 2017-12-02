@@ -30,11 +30,9 @@ class Results extends Component {
                         {restaurant.restaurant_name}
                       </Item.Header>
                       <Item.Description>
-                        <ul>
-                          <li>{restaurant.address}</li>
-                          <li>{restaurant.city}</li>
-                          <li>{restaurant.state}</li>
-                        </ul>
+                          <div>{restaurant.address}</div>
+                          <div>{restaurant.city}</div>
+                          <div>{restaurant.state}</div>
                       </Item.Description>
                     </Item.Content>
                   </Item>)}

@@ -11,7 +11,8 @@ const REQ_USER = "REQ_USER",
   REQ_ITEMS = "REQ_ITEMS",
   ADD_ITEMS = "ADD_ITEMS",
   DEL_ITEMS = "DEL_ITEMS",
-  DEL_ITEM = "DEL_ITEM";
+  DEL_ITEM = "DEL_ITEM",
+  EDIT_ITEM = "EDIT_ITEM";
 
 
 // Action Creators
@@ -126,6 +127,25 @@ export function addItems(item){
       }).then(response => {return response.data})
   }
 }
+export function editItem(item){
+  let {
+      section_id,
+      item_name,
+      item_description,
+      item_image,
+      item_price
+    } = item;
+  return{
+    type:EDIT_ITEM,
+    payload: axios.put("/api/item", {
+        section_id: section_id,
+        item_name: item_name,
+        item_description: item_description,
+        item_image: item_image,
+        item_price: item_price
+      }).then(response => {return response.data})
+  }
+}
 
 export function deleteItem(item_id) {
   return {
@@ -224,6 +244,13 @@ export default function reducer(state = initialState, action) {
     case ADD_ITEMS + "_PENDING":
       return Object.assign({}, state, { isLoading: true });
     case ADD_ITEMS + "_FULFILLED":
+      return Object.assign({}, state, {
+        isLoading: false,
+        item: action.payload
+      });
+    case EDIT_ITEM + "_PENDING":
+      return Object.assign({}, state, { isLoading: true });
+    case EDIT_ITEM + "_FULFILLED":
       return Object.assign({}, state, {
         isLoading: false,
         item: action.payload

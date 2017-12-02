@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Button,Icon, Item } from "semantic-ui-react";
 import { connect } from "react-redux";
 
+import ItemEdit from "../ItemEdit/ItemEdit";
 import { deleteItem, requestItems } from "../../ducks/reducer";
 import "./MenuItem.css"
 
@@ -19,8 +20,7 @@ class MenuItem extends Component {
   }
 
   render() {
-    return (
-      <Item>
+    return <Item>
         <Item.Image size="medium" src={this.props.image} />
         <Item.Content>
           <Item.Header as="a">{this.props.name}</Item.Header>
@@ -29,16 +29,18 @@ class MenuItem extends Component {
           </Item.Meta>
           <Item.Description>{this.props.description}</Item.Description>
           <Item.Extra>
-            <Button primary floated="right">
-              Edit<Icon name="wrench" />{" "}
-            </Button>
-            <Button color="red" floated="right" onClick={this.handleDelete}>
-              Delete<Icon name="delete" />
-            </Button>
+            <ItemEdit itemName={this.props.name} itemDescription={this.props.description} itemImage={this.props.image} itemId={this.props.id} itemPrice={this.props.price} />
+            {/* <Button primary floated="right">
+              Edit<Icon name="wrench" />
+            </Button> */}
+            <Item>
+              <Button color="red" floated="right" onClick={this.handleDelete}>
+                Delete<Icon name="delete" />
+              </Button>
+            </Item>
           </Item.Extra>
         </Item.Content>
-      </Item>
-    );
+      </Item>;
   }
 }
 

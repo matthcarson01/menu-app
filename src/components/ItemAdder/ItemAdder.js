@@ -46,9 +46,7 @@ class ItemAdder extends Component {
       snapshot => {},
       function(error) {},
       function() {
-        console.log(uploadTask.snapshot.downloadURL);
         that.setState({ downloadURL: uploadTask.snapshot.downloadURL });
-        console.log(that.state.downloadURL);
         that.props
           .addItems({
             section_id: that.props.section_id,

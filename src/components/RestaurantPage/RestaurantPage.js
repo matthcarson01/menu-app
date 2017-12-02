@@ -17,7 +17,7 @@ import {
 //   Visibility
 } from "semantic-ui-react";
 
-// import HeaderBar from "../HeaderBar/HeaderBar";
+import HeaderBar from "../HeaderBar/HeaderBar";
 import PageItem from "../PageItem/PageItem";
 import { requestPage, requestSections } from "../../ducks/reducer";
 import "./RestaurantPage.css";
@@ -45,6 +45,7 @@ class RestaurantPage extends Component {
     const { contextRef } = this.state;
 
     return <div>
+        <HeaderBar />
         {restaurant && <div ref={this.handleContextRef}>
             <Segment inverted textAlign="center" style={{ backgroundImage: "url(" + restaurant.cover_image + ")", backgroundSize: "cover", minHeight: "50vh", padding: "1em 0em" }} padded="very" vertical>
               <Container text>
