@@ -3,7 +3,7 @@ module.exports = {
     const dbInstance = req.app.get("db");
     const { section_name, restaurant_id } = req.body;
     dbInstance
-      .createSection([section_name])
+      .createSection([section_name, restaurant_id])
       .then(section => {
         return res.status(201).send(section);
       })

@@ -17,25 +17,15 @@ class SectionAdder extends Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
-  componentDidUpdate(prevProps, prevState){
-    if(prevState.section_id!==this.state.section_id){
-    axios.post(`/api/restaurant_menu`, {
-        section_id: this.state.section_id,
-        restaurant_id: this.state.restaurant_id
-      }).then(this.setState({
-        section_id:0,
-        section_name:''
-      }));
-    }
-  }
   onChange(e) {
     this.setState({[e.target.name]:e.target.value});
   }
   onSubmit(e) {
     e.preventDefault();
     axios.post(`/api/menu_section`, {section_name: this.state.section_name,restaurant_id:this.state.restaurant_id})
-        .then(response=>this.setState({section_id:response.data[0].section_id}))
-        .then(this.props.updateState(5));
+        .then(response=>{
+          this.setState({ section_id: 0, section_name: "" });
+        }).then(this.props.updateState(5));
     };
    
     //create section based on menu id

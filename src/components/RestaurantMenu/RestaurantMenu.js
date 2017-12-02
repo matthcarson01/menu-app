@@ -24,12 +24,15 @@ class RestaurantMenu extends Component {
   }
 
   render() {
-    console.log(this.props.sections);
+    console.log("initial Sections:",this.props.sections);
+    //Resetting state when I hit section adder
     if (this.state.index > 0) {
       this.props
         .requestSections(this.props.restaurant[0].restaurant_id)
-        .then(response => this.setState({ index: 0 }));
+        .then(response => this.setState({ index: 0 }))
+        .then(console.log("new Sections:", this.props.sections));
     }
+    //
     const sections = this.props.sections;
     let restaurant = {};
     this.props.restaurant[0]

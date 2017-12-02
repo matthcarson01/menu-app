@@ -39,7 +39,6 @@ class Section extends Component {
     const items = this.state.items;
     //update on submit from ItemAdder
     if(this.state.index > 0){
-      console.log()
       this.props
         .requestItems(this.props.id)
         .then(response => this.setState({ items: this.props.items, index: 0 }));
