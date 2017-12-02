@@ -1,5 +1,4 @@
 import axios from "axios";
-import { log } from "util";
 // Action Constants
 const REQ_USER = "REQ_USER",
   REQ_RESTAURANT = "REQ_RESTAURANT",
@@ -11,7 +10,8 @@ const REQ_USER = "REQ_USER",
   DEL_SECTIONS = "DEL_SECTIONS",
   REQ_ITEMS = "REQ_ITEMS",
   ADD_ITEMS = "ADD_ITEMS",
-  DEL_ITEMS = "DEL_ITEMS";
+  DEL_ITEMS = "DEL_ITEMS",
+  DEL_ITEM = "DEL_ITEM";
 
 
 // Action Creators
@@ -70,21 +70,12 @@ export function deleteSection(section_id){
 export function deleteItems(section_id){
 
   return{
-    type:DEL_SECTIONS,
+    type:DEL_ITEMS,
     payload: axios.delete(`/api/items/${section_id}`)
-                  .then(response => {
-                    console.log(response) 
-                    return response.data})
-  }
-}
-
-export function requestItems(section_id){
-  return{
-    type:REQ_ITEMS,
-    payload: axios.get(`/api/items/${section_id}`)
                   .then(response => {return response.data})
   }
 }
+
 export function editRestaurant(restaurant){
   let {
         user_id, 
@@ -115,6 +106,7 @@ export function editRestaurant(restaurant){
       .then(response => {return response.data;})
     }
 }
+
 export function addItems(item){
   let {
       section_id,
@@ -133,6 +125,22 @@ export function addItems(item){
         item_price: item_price
       }).then(response => {return response.data})
   }
+}
+
+export function deleteItem(item_id) {
+  return {
+    type: DEL_ITEM,
+    payload: axios.delete(`/api/item/${item_id}`)
+                  .then(response => {return response.data})
+  };
+}
+
+export function requestItems(section_id) {
+  return {
+    type: REQ_ITEMS,
+    payload: axios.get(`/api/items/${section_id}`)
+                  .then(response => {return response.data})
+  };
 }
 
 // Initial State
@@ -160,7 +168,6 @@ export default function reducer(state = initialState, action) {
     case REQ_RESTAURANTS + "_PENDING":
       return Object.assign({}, state, { isLoading: true });
     case REQ_RESTAURANTS + "_FULFILLED":
-      console.log("REQ_RESTAURANTS RAN", action.payload);
       return Object.assign({}, state, {
         isLoading: false,
         restaurants: action.payload
@@ -217,7 +224,6 @@ export default function reducer(state = initialState, action) {
     case ADD_ITEMS + "_PENDING":
       return Object.assign({}, state, { isLoading: true });
     case ADD_ITEMS + "_FULFILLED":
-      console.log("ADD_ITEMS", action.payload);
       return Object.assign({}, state, {
         isLoading: false,
         item: action.payload
@@ -225,6 +231,13 @@ export default function reducer(state = initialState, action) {
     case DEL_ITEMS + "_PENDING":
       return Object.assign({}, state, { isLoading: true });
     case DEL_ITEMS + "_FULFILLED":
+      return Object.assign({}, state, {
+        isLoading: false,
+        items: action.payload
+      });
+    case DEL_ITEM + "_PENDING":
+      return Object.assign({}, state, { isLoading: true });
+    case DEL_ITEM + "_FULFILLED":
       return Object.assign({}, state, {
         isLoading: false,
         items: action.payload

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import { Button, Header, Icon, Item, Segment } from "semantic-ui-react";
+import { Button, Header, Item, Segment } from "semantic-ui-react";
 
 import MenuItem from "../MenuItem/MenuItem";
 import ItemAdder from "../ItemAdder/ItemAdder";
@@ -58,12 +58,16 @@ class Section extends Component {
         <Item.Group divided>
           {items.length > 0 && items.map(item => (
               <MenuItem
+                section_id={this.props.id}
                 id={item.item_id}
                 name={item.item_name}
                 description={item.item_description}
                 image={item.item_image}
                 price={item.item_price}
                 key={item.item_id}
+                updateState={i =>
+                  this.setState({ index: this.state.index + i })
+                }
               />
             ))}
           <ItemAdder section_id={this.props.id} updateState={i => this.setState(

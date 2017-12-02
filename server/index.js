@@ -104,7 +104,7 @@ app.delete("/api/items/:id",menuController.deleteItems);
 app.get("/api/item/:id", menuController.getItem);
 app.post("/api/item", menuController.addItem);
 app.put("/api/item", menuController.updateItem);
-app.delete("/app/item/:id", menuController.deleteItem);
+app.delete("/api/item/:id", menuController.deleteItem);
 
 app.listen(port, () => {
   console.log(`Port: ${port}`);

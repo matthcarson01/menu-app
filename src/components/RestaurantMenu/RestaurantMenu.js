@@ -24,7 +24,6 @@ class RestaurantMenu extends Component {
   }
 
   render() {
-    console.log("initial Sections:",this.props.sections);
     //Resetting state when I hit section adder
     if (this.state.index > 0) {
       this.props

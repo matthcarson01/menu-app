@@ -109,11 +109,13 @@ module.exports = {
       .catch(e => console.log(e));
   },
   deleteItem: (req, res, next) => {
+    console.log("deleteItem ran",req.params.id);
     const dbInstance = req.app.get("db");
     dbInstance
       .deleteItem([req.params.id])
       .then(item => {
-        res.status(200).send(items);
+        console.log("query ran");
+        res.status(200).send(item);
       })
       .catch(e => console.log(e));
   }

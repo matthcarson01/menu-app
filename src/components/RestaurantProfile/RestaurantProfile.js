@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Button, Header, Icon, Modal } from "semantic-ui-react";
+// import { Button, Header, Icon, Modal } from "semantic-ui-react";
 
 import firebase from "../../firebase";
 import { requestUser, requestRestaurant, editRestaurant } from "../../ducks/reducer";

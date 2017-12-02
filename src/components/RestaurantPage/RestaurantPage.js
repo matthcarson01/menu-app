@@ -1,23 +1,23 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import {
-  Button,
+//   Button,
   Card,
   Container,
-  Divider,
+//   Divider,
   Grid,
   Header,
-  Icon,
-  Image,
-  List,
-  Menu,
-  Rail,
+//   Icon,
+//   Image,
+//   List,
+//   Menu,
+//   Rail,
   Segment,
   Sticky,
-  Visibility
+//   Visibility
 } from "semantic-ui-react";
 
-import HeaderBar from "../HeaderBar/HeaderBar";
+// import HeaderBar from "../HeaderBar/HeaderBar";
 import PageItem from "../PageItem/PageItem";
 import { requestPage, requestSections } from "../../ducks/reducer";
 import "./RestaurantPage.css";
