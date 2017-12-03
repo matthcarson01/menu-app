@@ -35,7 +35,44 @@ class ItemEdit extends Component {
 
   onSubmit(e) {
     e.preventDefault();
-    this.setState({modalOpen:false})
+    let that = this;
+    let file = this.state.file;
+    if(that.state.imagePreviewUrl === that.props.itemImage){
+    that.props
+    .editItem({
+      item_id: that.props.itemId,
+      item_name: that.state.item_name,
+      item_description: that.state.item_description,
+      item_image: that.state.item_image,
+      item_price: that.state.item_price
+    })
+    .then(() =>{
+      that.props.updateState(5);
+      that.setState({ modalOpen: false });
+    }
+)
+    } else{
+    const storageRef = firebase.storage().ref();
+    const uploadTask = storageRef.child("profilePictures/" + file.name).put(file);
+    uploadTask.on(
+      "state_changed",
+      snapshot => {},
+      function(error) {},
+      function() {
+        that.setState({ downloadURL: uploadTask.snapshot.downloadURL });
+        that.props.editItem({
+          item_id: that.props.itemId,
+          item_name: that.state.item_name,
+          item_description: that.state.item_description,
+          item_image: uploadTask.snapshot.downloadURL,
+          item_price: that.state.item_price
+        }).then(()=>{
+          that.props.updateState(5);
+          that.setState({ modalOpen: false });
+        });
+      }
+    );
+    }
   }
 
   processImageUpload(event) {
@@ -80,7 +117,6 @@ class ItemEdit extends Component {
                 <input type="file" name="item_image" onChange={event => {
                     this.processImageUpload(event);
                   }} alt="preview image" />
-                {/* Possibly move onchange out to separte function*/}
               </Form.Field>
               <Form.Field>
                 <label>Item Price:</label>

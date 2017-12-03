@@ -14,7 +14,9 @@ class Home extends Component {
     this.state = {
       city:"",
       type:"",
-      fireRedirect: false
+      fireRedirect: false,
+      cityRedirect:false,
+      typeRedirect:false
     };
     this.handleChange=this.handleChange.bind(this);
     this.handleSubmit=this.handleSubmit.bind(this);
@@ -25,14 +27,33 @@ class Home extends Component {
   }
 
   handleSubmit(e){
-    console.log('I submitted',this.state);
-    this.props
-      .requestRestaurants({city:this.state.city,type:this.state.type})
-      .then(this.setState({ fireRedirect: true }));
-  }
+    if(this.state.city && this.state.type){
+      this.setState({ 
+        fireRedirect: true,
+        cityRedirect:true,
+        typeRedirect:true 
+      });
+      }else if(this.state.city && !this.state.type){
+      this.setState({
+        fireRedirect: true,
+        cityRedirect: true,
+        typeRedirect: false
+      });
+    }else if(!this.state.city && this.state.type){
+      this.setState({
+        fireRedirect: true,
+        cityRedirect: false,
+        typeRedirect: true
+      });
+    }}
+  //   this.props
+  //     .requestRestaurants({city:this.state.city,type:this.state.type})
+  //     .then(this.setState({ fireRedirect: true }));
+    
+  // }
 
   render() {
-    const { fireRedirect } = this.state;
+    const { fireRedirect, cityRedirect, typeRedirect } = this.state;
     return <div>
         <HeaderBar />
         <Grid textAlign="center" style={{ height: "89vh" }} verticalAlign="middle" className="mainContent">
@@ -60,7 +81,10 @@ class Home extends Component {
             </datalist>
           </Grid.Column>
         </Grid>
-        {fireRedirect && <Redirect to={`/results/${this.state.city}/${this.state.type}`} />}
+        results?city=Dallas&type=Asian
+        {fireRedirect && cityRedirect && typeRedirect && <Redirect to={`/results?city=${this.state.city}&type=${this.state.type}`} />}
+        {fireRedirect && cityRedirect && !typeRedirect && <Redirect to={`/results?city=${this.state.city}`} />}
+        {fireRedirect && !cityRedirect && typeRedirect && <Redirect to={`/results?type=${this.state.type}`} />}
       </div>;
   }
 }

@@ -3,20 +3,22 @@ import { connect } from "react-redux";
 import { Item } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import HeaderBar from "../HeaderBar/HeaderBar";
+import { propertyToUrl, urlToProperty, urlToList } from "query-string-params";
 
 import { requestRestaurants } from "../../ducks/reducer";
 import "./Results.css";
 
 class Results extends Component {
-    // constructor(props){
-    //     super(props);
-    // }
     componentWillMount(){
-        let {city,type} = this.props.match.params;
-        this.props.requestRestaurants({city,type});
+      const parsed = urlToProperty(this.props.location.search);
+      let {city,type} = parsed;
+      console.log(`city:${city} & type ${type}`);
+
+      this.props.requestRestaurants({city,type});
     }
     render(){
         const restaurants = this.props.restaurants;
+
         return <div>
             <HeaderBar />
             <main>

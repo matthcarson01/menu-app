@@ -9,7 +9,7 @@ import RestaurantPage from './components/RestaurantPage/RestaurantPage';
 export default (
   <Switch>
     <Route exact path="/" component={Home} />
-    <Route path="/results/:city/:type" component={Results} />
+    <Route path="/results" component={Results} />
     <Route path="/user" component={UserProfile} />
     <Route path="/eat/:restaurantURL" component={RestaurantPage} />
   </Switch>

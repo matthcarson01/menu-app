@@ -32,11 +32,20 @@ export function requestPage(url) {
 }
 export function requestRestaurants(terms) {
   let{city,type}=terms;
-  return {
-    type: REQ_RESTAURANTS,
-    payload: axios.get(`/api/restaurants?city=${city}&type=${type}`)
-                  .then(response => response.data)
-  };
+  if(city && type){
+      return { type: REQ_RESTAURANTS, payload: axios
+          .get(`/api/restaurants?city=${city}&type=${type}`)
+          .then(response => response.data) };
+  }else if(city && !type){
+      return { type: REQ_RESTAURANTS, payload: axios
+          .get(`/api/restaurants?city=${city}`)
+          .then(response => response.data) };
+  }else if(!city && type){
+      return { type: REQ_RESTAURANTS, payload: axios
+          .get(`/api/restaurants?type=${type}`)
+          .then(response => response.data) };
+  }
+
 }
 export function requestRestaurant(id) {
   return {
@@ -81,7 +90,6 @@ export function editRestaurant(restaurant){
   let {
         user_id, 
         restaurant_name, 
-        owner_name, 
         address, 
         city, 
         state, 
@@ -89,12 +97,14 @@ export function editRestaurant(restaurant){
         phone, 
         email, 
         cover_image, 
-        restaurant_type
+        restaurant_type,
+        restaurant_url
       } = restaurant;
-  return { type: EDIT_RESTAURANT, payload: axios
-      .put(`/api/user_restaurant_edit/${user_id}`, {
+  console.log("Action Creator editRestaurant ran",user_id);
+  return { 
+    type: EDIT_RESTAURANT, 
+    payload: axios.put(`/api/user_restaurant_edit/${user_id}`, {
         restaurant_name,
-        owner_name,
         address,
         city,
         state,
@@ -102,10 +112,12 @@ export function editRestaurant(restaurant){
         phone,
         email,
         cover_image,
-        restaurant_type
+        restaurant_type,
+        restaurant_url
       })
-      .then(response => {return response.data;})
-    }
+      .then(response => {
+        return response.data;
+      }) };
 }
 
 export function addItems(item){
@@ -129,7 +141,7 @@ export function addItems(item){
 }
 export function editItem(item){
   let {
-      section_id,
+      item_id,
       item_name,
       item_description,
       item_image,
@@ -138,7 +150,7 @@ export function editItem(item){
   return{
     type:EDIT_ITEM,
     payload: axios.put("/api/item", {
-        section_id: section_id,
+        item_id: item_id,
         item_name: item_name,
         item_description: item_description,
         item_image: item_image,
@@ -202,6 +214,7 @@ export default function reducer(state = initialState, action) {
     case EDIT_RESTAURANT + "_PENDING":
       return Object.assign({}, state, { isLoading: true });
     case EDIT_RESTAURANT + "_FULFILLED":
+      console.log("EDIT_RESTAURANT Payload Delivered")
       return Object.assign({}, state, {
         isLoading: false,
         restaurant: action.payload

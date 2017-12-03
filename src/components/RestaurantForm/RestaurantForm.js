@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { Redirect } from "react-router";
 import axios from "axios";
 
+import firebase from "../../firebase";
 import { requestUser } from "../../ducks/reducer";
 
 class RestaurantFrom extends Component {
@@ -10,7 +11,6 @@ class RestaurantFrom extends Component {
         super(props);
         this.state = {
             restaurant_name:'',
-            owner_name: this.props.user.user_name,
             address:'',
             city:'',
             state:'',
@@ -19,6 +19,9 @@ class RestaurantFrom extends Component {
             email:'',
             cover_image:null,
             restaurant_type:'',
+            file: "",
+            imagePreviewUrl: null,
+            downloadURL: null,
             fireRedirect: false
         }
         this.onChange = this.onChange.bind(this);
@@ -30,27 +33,75 @@ class RestaurantFrom extends Component {
     onChange(e){
         this.setState({[e.target.name]:e.target.value});
     }
+    processImageUpload(e) {
+    e.preventDefault();
+    let reader = new FileReader();
+    let file = e.target.files[0];
+    reader.onloadend = () => {
+      this.setState({
+        file: file,
+        imagePreviewUrl: reader.result
+      });
+    };
+    reader.readAsDataURL(file);
+    }
     onSubmit(e){
         e.preventDefault();
-        axios
-          .post(`/api/user_restaurant/${this.props.user.user_id}`, {
-            restaurant_name: this.state.restaurant_name,
-            owner_name: this.state.owner_name,
-            address: this.state.address,
-            city: this.state.city,
-            state: this.state.state,
-            zip: this.state.zip,
-            phone: this.state.phone,
-            email: this.state.email,
-            cover_image: this.state.cover_image,
-            restaurant_type: this.state.restaurant_type
-          })
-          .then(this.setState({ fireRedirect: true }));
+        let url = (this.state.restaurant_name + "-" + this.state.city)
+          .toLowerCase()
+          .replace(/ /g, "-")
+          .replace(/'/g, "");
+        let that = this;
+        let file = this.state.file;
+          if (!that.state.imagePreviewUrl) {
+            axios.post( `/api/user_restaurant/${that.props.user.user_id}`,
+              { restaurant_name: that.state.restaurant_name,
+                address: that.state.address,
+                city: that.state.city,
+                state: that.state.state,
+                zip: that.state.zip,
+                phone: that.state.phone,
+                email: that.state.email,
+                cover_image: `http://thechurchontheway.org/wp-content/uploads/2016/05/placeholder1.png`,
+                restaurant_type: that.state.restaurant_type,
+                restaurant_url: url}
+            ).then(() => {that.setState({ fireRedirect: true })});
+          } else {
+            const storageRef = firebase.storage().ref();
+            const uploadTask = storageRef
+              .child("profilePictures/" + file.name)
+              .put(file);
+            uploadTask.on("state_changed", snapshot => {}, function(error) {}, function() {
+            that.setState({downloadURL: uploadTask.snapshot.downloadURL});
+            axios.post(`/api/user_restaurant/${that.props.user.user_id}`, {
+                restaurant_name: that.state.restaurant_name,
+                address: that.state.address,
+                city: that.state.city,
+                state: that.state.state,
+                zip: that.state.zip,
+                phone: that.state.phone,
+                email: that.state.email,
+                cover_image: uploadTask.snapshot.downloadURL,
+                restaurant_type: that.state.restaurant_type,
+                restaurant_url:url
+              }).then(() => {that.setState({ fireRedirect: true })});
+            });
+          }
     }
     render() {
         const { fireRedirect } = this.state;
-        return (
-        <div>
+        let imagePreview = null;
+        if (this.state.imagePreviewUrl) {
+          imagePreview = (
+            <img style={{width:"300px", height:"auto"}}
+              src={this.state.imagePreviewUrl}
+              className="image-preview"
+              alt="preview"
+            />
+          );
+        }
+
+        return <div>
             <form onSubmit={this.onSubmit}>
               <h1>Add Your Restaurant</h1>
               <div className="form-group">
@@ -82,6 +133,11 @@ class RestaurantFrom extends Component {
                   Email:
                   <input type="text" name="email" value={this.state.email} onChange={this.onChange} />
                 </label>
+                <label>Item Image:</label>
+                {imagePreview}
+                <input type="file" name="item_image" onChange={event => {
+                    this.processImageUpload(event);
+                  }} alt="preview image" />
                 <label>
                   Restaurant Type:
                   <input type="text" name="restaurant_type" value={this.state.restaurant_type} onChange={this.onChange} />
@@ -89,9 +145,8 @@ class RestaurantFrom extends Component {
                 <input type="submit" value="Submit" className="Submit-Button" />
               </div>
             </form>
-            {fireRedirect &&(<Redirect to={"/user/user-profile"} />) }
-        </div>
-          )
+            {fireRedirect && <Redirect to={"/user/menu"} />}
+          </div>;
     }
 }
 

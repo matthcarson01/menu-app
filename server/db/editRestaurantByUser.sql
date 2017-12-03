@@ -1,13 +1,13 @@
 UPDATE restaurants 
 SET restaurant_name = $1, 
-    owner_name=$2,
-    address=$3, 
-    city=$4, 
-    state=$5, 
-    zip=$6,
-    phone=$7,
-    email=$8,
-    cover_image=$9,
-    restaurant_type=$10
+    address=$2, 
+    city=$3, 
+    state=$4, 
+    zip=$5,
+    phone=$6,
+    email=$7,
+    cover_image=$8,
+    restaurant_type=$9,
+    restaurant_url=$10
 WHERE user_id = $11
 RETURNING *;

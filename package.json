@@ -12,6 +12,7 @@
     "massive": "^4.5.0",
     "passport": "^0.4.0",
     "passport-auth0": "^0.6.0",
+    "query-string-params": "^1.7.5",
     "react": "^16.1.1",
     "react-dom": "^16.1.1",
     "react-redux": "^5.0.6",

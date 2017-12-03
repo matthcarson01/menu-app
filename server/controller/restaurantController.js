@@ -9,15 +9,34 @@ module.exports = {
     },
     getRestaurants: (req,res,next) => {
         const dbInstance = req.app.get('db');
-        dbInstance.getRestaurants([req.query.city, req.query.type])
-                .then(restaurants => {
-                    res.status(200).send(restaurants)
-                    })
-                .catch(()=> (console.log));
+        if(req.query.city && req.query.type){
+            console.log("Both Conditions")
+        dbInstance
+          .getRestaurants([req.query.city, req.query.type])
+          .then(restaurants => {
+            res.status(200).send(restaurants);
+          })
+          .catch(() => console.log);
+        } else if(req.query.city){
+            console.log("City Condtion")
+        dbInstance
+          .getRestaurantsByCity([req.query.city])
+          .then(restaurants => {
+            res.status(200).send(restaurants);
+          })
+          .catch(() => console.log);
+        } else if (req.query.type){
+            console.log("Type Condition")
+        dbInstance
+          .getRestaurantsByType([req.query.type])
+          .then(restaurants => {
+            res.status(200).send(restaurants);
+          })
+          .catch(() => console.log);
+        }
     },
     getRestaurantByUrl: (req,res,next) => {
         const dbInstance = req.app.get('db');
-        console.log("params", req.params);
         dbInstance.getRestaurantByUrl([req.params.url])
                 .then(restaurant => {res.status(200).send(restaurant)})
                 .catch(()=> (console.log));
@@ -25,8 +44,7 @@ module.exports = {
     createRestaurant:(req,res,next)=>{
         const dbInstance = req.app.get('db');
         const user_id = req.params.id;
-        const {restaurant_name, 
-            owner_name, 
+        const {restaurant_name,  
             address, 
             city, 
             state, 
@@ -34,10 +52,10 @@ module.exports = {
             phone,
             email,
             cover_image,
-            restaurant_type} = req.body;
+            restaurant_type,
+            restaurant_url} = req.body;
         dbInstance.createUserRestaurant([
             restaurant_name,
-            owner_name,
             address,
             city,
             state,
@@ -46,6 +64,7 @@ module.exports = {
             email,
             cover_image,
             restaurant_type,
+            restaurant_url,
             user_id
           ])
           .then(restaurant => {
@@ -57,7 +76,6 @@ module.exports = {
         const dbInstance = req.app.get('db');
         const user_id = req.params.id;
         const {restaurant_name, 
-            owner_name, 
             address, 
             city, 
             state, 
@@ -65,10 +83,10 @@ module.exports = {
             phone,
             email,
             cover_image,
-            restaurant_type} = req.body;
+            restaurant_type,
+            restaurant_url} = req.body;
         dbInstance.editRestaurantByUser([
             restaurant_name,
-            owner_name,
             address,
             city,
             state,
@@ -77,6 +95,7 @@ module.exports = {
             email,
             cover_image,
             restaurant_type,
+            restaurant_url,
             user_id
           ])
           .then(restaurant => {

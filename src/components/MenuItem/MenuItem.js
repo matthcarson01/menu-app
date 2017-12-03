@@ -9,6 +9,9 @@ import "./MenuItem.css"
 class MenuItem extends Component {
   constructor(props) {
     super(props);
+    this.state={
+      index:0
+    };
     this.handleDelete = this.handleDelete.bind(this);
   }
 
@@ -20,6 +23,10 @@ class MenuItem extends Component {
   }
 
   render() {
+    if(this.state.index>0){
+      this.props.updateState(5);
+      this.setState({index:0});
+    }
     return <Item>
         <Item.Image size="medium" src={this.props.image} />
         <Item.Content>
@@ -29,10 +36,12 @@ class MenuItem extends Component {
           </Item.Meta>
           <Item.Description>{this.props.description}</Item.Description>
           <Item.Extra>
-            <ItemEdit itemName={this.props.name} itemDescription={this.props.description} itemImage={this.props.image} itemId={this.props.id} itemPrice={this.props.price} />
-            {/* <Button primary floated="right">
-              Edit<Icon name="wrench" />
-            </Button> */}
+            <ItemEdit 
+              updateState={i => this.setState({ index: this.state.index + i } )}
+              itemName={this.props.name} 
+              itemDescription={this.props.description} 
+              itemImage={this.props.image} itemId={this.props.id} 
+              itemPrice={this.props.price}  />
             <Item>
               <Button color="red" floated="right" onClick={this.handleDelete}>
                 Delete<Icon name="delete" />

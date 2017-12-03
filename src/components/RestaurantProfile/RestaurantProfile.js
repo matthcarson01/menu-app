@@ -60,6 +60,8 @@ class RestaurantProfile extends Component {
   onSubmit(e){
     e.preventDefault();
     // this.uploadImage(e)
+    let url = (this.state.restaurant_name + "-" + this.state.city).toLowerCase().replace(/ /g, "-")
+    // .replace(/'/g, "");
     let that = this;
     let file = this.state.file;
     const storageRef = firebase.storage().ref();
@@ -67,10 +69,10 @@ class RestaurantProfile extends Component {
     uploadTask.on("state_changed", snapshot => {}, function(error) {}, function() {
         console.log(uploadTask.snapshot.downloadURL);
         that.setState({ downloadURL: uploadTask.snapshot.downloadURL });
-        that.props.editRestaurant({
+        that.props
+          .editRestaurant({
             user_id: that.props.user.user_id,
             restaurant_name: that.state.restaurant_name,
-            owner_name: that.state.owner_name,
             address: that.state.address,
             city: that.state.city,
             state: that.state.state,
@@ -78,20 +80,23 @@ class RestaurantProfile extends Component {
             phone: that.state.phone,
             email: that.state.email,
             cover_image: uploadTask.snapshot.downloadURL,
-            restaurant_type: that.state.restaurant_type
-          }).then(() => that.setState({
-                    editForm: false,
-                    restaurant_name: that.props.restaurant[0].restaurant_name,
-                    owner_name: that.props.restaurant[0].owner_name,
-                    address: that.props.restaurant[0].address,
-                    city: that.props.restaurant[0].city,
-                    state: that.props.restaurant[0].state,
-                    zip: that.props.restaurant[0].zip,
-                    phone: that.props.restaurant[0].phone,
-                    email: that.props.restaurant[0].email,
-                    cover_image: that.props.restaurant[0].cover_image,
-                    restaurant_type: that.props.restaurant[0].restaurant_type
-                  }));
+            restaurant_type: that.state.restaurant_type,
+            restaurant_url: url
+          })
+          .then(() =>
+            that.setState({
+              editForm: false,
+              restaurant_name: that.props.restaurant[0].restaurant_name,
+              address: that.props.restaurant[0].address,
+              city: that.props.restaurant[0].city,
+              state: that.props.restaurant[0].state,
+              zip: that.props.restaurant[0].zip,
+              phone: that.props.restaurant[0].phone,
+              email: that.props.restaurant[0].email,
+              cover_image: that.props.restaurant[0].cover_image,
+              restaurant_type: that.props.restaurant[0].restaurant_type
+            })
+          );
       });
   }
 
@@ -123,7 +128,7 @@ class RestaurantProfile extends Component {
     const restaurant = this.props.restaurant[0];
     let imagePreview = null;
     // let downloadURL = null;
-    if (this.state.imagePreviewUrl) {imagePreview = (<img src={this.state.imagePreviewUrl} className = "image-preview CoverImage" alt="Cover"/>)};
+    if (this.state.imagePreviewUrl) {imagePreview = (<img src={this.state.imagePreviewUrl} className = "image-preview" alt="Cover"/>)};
     // if (this.state.downloadURL) {downloadURL = (<h1> {this.state.downloadURL} </h1>)};
     return (
     <div>
