@@ -1,1 +1,11 @@
-@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css');
+.addInput{
+    display:flex;
+    flex-flow:row nowrap;
+    justify-content: center;
+}
+.addInput>.buttonInput {
+    border-radius: 0 .28571429rem .28571429rem 0 !important;
+}
+.addInput>.sectionInput {
+    border-radius: .28571429rem 0 0 .28571429rem  !important;
+}

@@ -2,6 +2,7 @@ module.exports = {
   createSection: (req, res, next) => {
     const dbInstance = req.app.get("db");
     const { section_name, restaurant_id } = req.body;
+    console.log("Entered Menu Controller")
     dbInstance
       .createSection([section_name, restaurant_id])
       .then(section => {

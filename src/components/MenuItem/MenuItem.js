@@ -43,7 +43,7 @@ class MenuItem extends Component {
               itemImage={this.props.image} itemId={this.props.id} 
               itemPrice={this.props.price}  />
             <Item>
-              <Button color="red" floated="right" onClick={this.handleDelete}>
+              <Button color="red" floated="right" onClick={this.handleDelete} style={{width:"7.5rem"}}>
                 Delete<Icon name="delete" />
               </Button>
             </Item>

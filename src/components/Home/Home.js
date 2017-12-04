@@ -55,7 +55,7 @@ class Home extends Component {
     const { fireRedirect, cityRedirect, typeRedirect} = this.state;
     return <div>
         <HeaderBar showButton={true}/>
-        <main className="mainContent">
+        <main className="mainContent" >
           <Input className="searchInput">
             <input list="food type" name="type" placeholder="Try this.." className="typeInput" onChange={this.handleChange} />
             <input list="city" name="city" placeholder="City.." className="cityInput" onChange={this.handleChange} />
@@ -76,29 +76,6 @@ class Home extends Component {
             <option value="Austin" />
           </datalist>
         </main>
-        {/* <Grid textAlign="center" style={{ height: "89vh", margin: "15vh", width: "100%" }} verticalAlign="middle" className="mainContent">
-          <Grid.Column>
-            <Input>
-              <input list="food type" name="type" placeholder="Try this.." className="typeInput" onChange={this.handleChange} />
-              <input list="city" name="city" placeholder="City.." className="cityInput" onChange={this.handleChange} />
-              <Button onClick={this.handleSubmit} type="submit">
-                Search
-              </Button>
-            </Input>
-            <datalist id="food type">
-              <option value="Asian" />
-              <option value="Bar-B-Q" />
-              <option value="Coffee Shop" />
-              <option value="Mexican" />
-              <option value="Cajun" />
-            </datalist>
-            <datalist id="city">
-              <option value="Dallas" />
-              <option value="Fort Worth" />
-              <option value="Austin" />
-            </datalist>
-          </Grid.Column>
-        </Grid> */}
         {fireRedirect && cityRedirect && typeRedirect && <Redirect to={`/results?city=${this.state.city}&type=${this.state.type}`} style={{display:"none"}}/>}
         {fireRedirect && cityRedirect && !typeRedirect && <Redirect to={`/results?city=${this.state.city}`}  style={{display:"none"}} />}
         {fireRedirect && !cityRedirect && typeRedirect && <Redirect to={`/results?type=${this.state.type}`} style={{display:"none"}} />}

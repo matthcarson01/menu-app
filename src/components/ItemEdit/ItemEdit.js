@@ -103,7 +103,7 @@ class ItemEdit extends Component {
     }
 
     return <Item>
-        <Modal trigger={<Button onClick={this.handleOpen} primary floated="right">
+        <Modal trigger={<Button onClick={this.handleOpen} primary floated="right" style={{width:"7.5rem"}}>
               Edit<Icon name="wrench" />
             </Button>} open={this.state.modalOpen} onClose={this.handleClose} basic size="small">
           <Header icon="lab" content="New Section Item" />

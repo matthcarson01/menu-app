@@ -99,7 +99,7 @@ class ItemAdder extends Component {
     }
 
     return <Item>
-          <Modal trigger={<Button onClick={this.handleOpen}>
+          <Modal trigger={<Button onClick={this.handleOpen} style={{width:"10rem"}}>
                 Add New Item
               </Button>} open={this.state.modalOpen} onClose={this.handleClose} basic size="small">
             <Header icon="lab" content="New Section Item" />

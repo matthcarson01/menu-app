@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import {Header} from "semantic-ui-react";
 
 import { requestUser } from "../../ducks/reducer";
 import "./Profile.css";
@@ -13,9 +14,9 @@ class Profile extends Component {
   }
   render() {
     return <div className="userProfile">
-        <h1>User:</h1>
+        <Header as="h1">User Profile</Header>
         {this.props.user && <div>
-          <span className="title">Name:</span> {this.props.user.user_name}
+            <span className="title">Name:</span> {this.props.user.user_name}
           </div>}
       </div>;
   }

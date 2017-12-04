@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import {Header} from "semantic-ui-react";
 
 import { requestUser, requestRestaurant, requestSections } from "../../ducks/reducer";
 import Section from "../Section/Section";
@@ -38,23 +39,22 @@ class RestaurantMenu extends Component {
       ? (restaurant = this.props.restaurant[0])
       : (restaurant = {});
 
-    return (
-      <div>
-        <SectionAdder
-          userId={this.props.user.user_id}
-          restaurantId={restaurant.restaurant_id}
-          updateState={i => this.setState({ index: this.state.index + i })}
-        />
-        {sections &&
-          sections.map(section => (
+    return <div>
+        <Header as="h1" textAlign="left">
+          Menu Profile
+        </Header>
+        <h2 style={{ textAlign: "center" }}>Add New Section</h2>
+        {restaurant && <SectionAdder userId={this.props.user.user_id} restaurantId={restaurant.restaurant_id} updateState={i => this.setState(
+                { index: this.state.index + i }
+              )} />}
+        {sections && sections.map(section => (
             <Section
               id={section.section_id}
               name={section.section_name}
               key={section.section_id}
             />
           ))}
-      </div>
-    );
+      </div>;
   }
 }
 function mapStateToProps(state){
