@@ -4,6 +4,9 @@ import React, { Component } from 'react';
 import { Button, Grid, Input } from "semantic-ui-react";
 import { Redirect } from "react-router";
 import { connect } from "react-redux";
+import TextLoop from "react-text-loop";
+import { Link } from "react-router-dom";
+
 
 import { requestRestaurants } from "../../ducks/reducer";
 import HeaderBar from "../HeaderBar/HeaderBar";
@@ -54,8 +57,18 @@ class Home extends Component {
   render() {
     const { fireRedirect, cityRedirect, typeRedirect} = this.state;
     return <div>
-        <HeaderBar showButton={true}/>
-        <main className="mainContent" >
+        <HeaderBar showButton={true} />
+        <main className="mainContent">
+          <div>
+          <h1 className="headLine">Menu Sage</h1>
+          <h2 className="subHeader">
+            What's for <TextLoop>
+              <span> Breakfast</span>
+              <span> Lunch</span>
+              <span> Dinner</span>
+            </TextLoop>
+          </h2>
+          </div>
           <Input className="searchInput">
             <input list="food type" name="type" placeholder="Try this.." className="typeInput" onChange={this.handleChange} />
             <input list="city" name="city" placeholder="City.." className="cityInput" onChange={this.handleChange} />
@@ -76,9 +89,9 @@ class Home extends Component {
             <option value="Austin" />
           </datalist>
         </main>
-        {fireRedirect && cityRedirect && typeRedirect && <Redirect to={`/results?city=${this.state.city}&type=${this.state.type}`} style={{display:"none"}}/>}
-        {fireRedirect && cityRedirect && !typeRedirect && <Redirect to={`/results?city=${this.state.city}`}  style={{display:"none"}} />}
-        {fireRedirect && !cityRedirect && typeRedirect && <Redirect to={`/results?type=${this.state.type}`} style={{display:"none"}} />}
+        {fireRedirect && cityRedirect && typeRedirect && <Redirect to={`/results?city=${this.state.city}&type=${this.state.type}`} style={{ display: "none" }} />}
+        {fireRedirect && cityRedirect && !typeRedirect && <Redirect to={`/results?city=${this.state.city}`} style={{ display: "none" }} />}
+        {fireRedirect && !cityRedirect && typeRedirect && <Redirect to={`/results?type=${this.state.type}`} style={{ display: "none" }} />}
       </div>;
   }
 }
