@@ -32,7 +32,7 @@ export default class HeaderBar extends Component {
         <nav className="barShadow">
           <Image src={appLogo} as={Link} to="/" wrapped className="logo" />
           {!this.state.user && showButton && <Button as="a" onClick={this.handleLogin} content="Log In/Sign Up" as="a" color="blue" style={{ width: "10rem", height: "2.25rem" }} />}
-          {this.state.user && showButton && <Button as="a" onClick={this.handleLogout} content="Log Out" as="a" inverted color="red" style={{ width: "6rem", height: "2.25rem" }} />}
+          {this.state.user && showButton && <Button as="a" onClick={this.handleLogout} content="Log Out" as="a"  color="red" style={{ width: "7rem", height: "2.25rem" }} />}
         </nav>
     )
   }

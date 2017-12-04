@@ -46,11 +46,7 @@ class Results extends Component {
                         to={`/eat/${restaurant.restaurant_url}`}
                         content={restaurant.restaurant_name}
                       />
-                      {/* {restaurant.restaurant_name}
-                      </Item.Header> */}
                       <Item.Meta content="Address" />
-                      {/* <span>Address</span>
-                      </Item.Meta> */}
                       <Item.Description className="resultBox">
                         <span>
                           {restaurant.address}

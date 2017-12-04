@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-// import { Button, Header, Icon, Modal } from "semantic-ui-react";
+import { Button, Container, Header, Icon, Segment } from "semantic-ui-react";
 
 import firebase from "../../firebase";
 import { requestUser, requestRestaurant, editRestaurant } from "../../ducks/reducer";
@@ -128,37 +128,46 @@ class RestaurantProfile extends Component {
     const restaurant = this.props.restaurant[0];
     let imagePreview = null;
     // let downloadURL = null;
-    if (this.state.imagePreviewUrl) {imagePreview = (<img src={this.state.imagePreviewUrl} className = "image-preview" alt="Cover"/>)};
+    if (this.state.imagePreviewUrl) {imagePreview = (<img src={this.state.imagePreviewUrl} className = "image-preview" alt="Cover" style={{maxWidth:"300px", height: "auto"}}/>)};
     // if (this.state.downloadURL) {downloadURL = (<h1> {this.state.downloadURL} </h1>)};
-    return (
-    <div>
-        <button onClick={this.showForm}>Edit</button>
+    return <div>
+        <Segment basic style={{height:"7.5rem"}}>
+        <Header size="large" textAlign="left">
+          Restaurant Profile
+        </Header>
+        <Button content="Edit Profile" icon="wrench" labelPosition="left" size="medium" floated="left" onClick={this.showForm} style={{ width: "11rem", height: "2.25rem" }} />
+        </Segment>
+        {/* <button onClick={this.showForm}>Edit</button> */}
         {!this.state.editForm && <section>
-            <h1>{restaurant.restaurant_name}</h1>
-            <div>
-              Name:<span>{this.state.restaurant_name}</span>
-            </div>
-            <div>
-              Address:<span>{this.state.address}</span>
-            </div>
-            <div>
-              City:<span>{this.state.city}</span>
-            </div>
-            <div>
-              Zip:<span>{this.state.zip}</span>
-            </div>
-            <div>
-              Phone:<span>{this.state.phone}</span>
-            </div>
-            <div>
-              Email:<span>{this.state.email}</span>
-            </div>
-            <div>
-              Type:<span>{this.state.restaurant_type}</span>
-            </div>
-            <div>
-              Cover Image:<img src={this.state.cover_image} alt="cover not showing" className="CoverImage" />
-            </div>
+            <Container fluid textAlign="justified">
+              <Header as="h3">Name</Header>
+              <span>{this.state.restaurant_name}</span>
+            </Container>
+            <Container fluid textAlign="justified">
+              <Header as="h3">Address</Header>
+              <span>{this.state.address}</span>
+              <br />
+              <span>
+                {this.state.city},{this.state.state} {this.state.zip}{" "}
+              </span>
+            </Container>
+            <Container fluid textAlign="justified">
+              <Header as="h3">Contact Information</Header>
+              <span className="title">Phone:</span>
+              <span>{this.state.phone}</span>
+              <br />
+              <span className="title">Email:</span>
+              <span>{this.state.email}</span>
+            </Container>
+            <Container fluid textAlign="justified">
+              <Header as="h3">Type</Header>
+              <span>{this.state.restaurant_type}</span>
+            </Container>
+            <Container fluid textAlign="justified">
+              <Header as="h3">Cover Image</Header>
+              <br />
+              <img src={this.state.cover_image} alt="cover not showing" className="CoverImage" />
+            </Container>
           </section>}
         {this.state.editForm && <form onSubmit={this.onSubmit}>
             <h1>{restaurant.restaurant_name}</h1>
@@ -204,7 +213,7 @@ class RestaurantProfile extends Component {
               <input type="submit" value="Submit" className="Submit-Button" />
             </div>
           </form>}
-      </div>)
+      </div>;
   }
 }
 

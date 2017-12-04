@@ -1,0 +1,14 @@
+.userProfile{
+    display:flex;
+    flex-flow: column wrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding:0.5rem;
+    height: 70vh;
+}
+.userProfile .title{
+    font-weight: bold;
+}
+.userProfile div{
+    font-size: 1.25rem;
+}

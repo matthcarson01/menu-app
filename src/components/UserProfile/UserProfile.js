@@ -33,7 +33,8 @@ class UserProfile extends Component {
     const { activeItem } = this.state;
     return (
       <div>
-        <HeaderBar />
+        <HeaderBar showButton={true}/>
+        <main >
         <Menu attached="top">
           <Menu.Header>
             <Icon name="wrench" size="big" />User Settings
@@ -76,6 +77,7 @@ class UserProfile extends Component {
             </Segment>
           </Grid.Column>
         </Grid>
+        </main>
       </div>
     );
   }

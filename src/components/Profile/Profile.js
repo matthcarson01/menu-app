@@ -12,9 +12,11 @@ class Profile extends Component {
     this.props.requestUser();  
   }
   render() {
-    return <div>
-        <h1>Profile Component</h1>
-        {this.props.user && <div>Name: {this.props.user.user_name}</div>}
+    return <div className="userProfile">
+        <h1>User:</h1>
+        {this.props.user && <div>
+          <span className="title">Name:</span> {this.props.user.user_name}
+          </div>}
       </div>;
   }
 }
