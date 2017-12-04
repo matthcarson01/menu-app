@@ -1,1 +1,0 @@
-INSERT INTO menu (menu_id, section_id, restaurant_id) VALUES (DEFAULT, $1, $2) RETURNING menu_id, section_id, restaurant_id;

@@ -1,0 +1,2 @@
+INSERT INTO restaurants (restaurant_name, address, city, state, zip,phone,email,cover_image,restaurant_type,restaurant_url,user_id) 
+VALUES ($1, $2, $3, $4, $5, $6,$7,$8,$9,$10,$11) RETURNING restaurant_name,address, city, state, zip,phone,email,restaurant_type,restaurant_url;

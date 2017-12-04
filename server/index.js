@@ -12,11 +12,12 @@ const { secret } = require("../keys/config").session;
 const {domain, clientID, clientSecret} = require("../keys/config").auth0;
 const restaurantController = require('./controller/restaurantController');
 const menuController = require('./controller/menuController');
-const port = 3001;
+const port = 80;
 
 const app = express();
 app.use(json());
 app.use(cors());
+app.use(express.static(`${__dirname}/../build`));
 
 app.use(
   session({
@@ -74,12 +75,12 @@ massive(connectionString)
 app.get(
   "/login",
   passport.authenticate("auth0", {
-    successRedirect: "http://localhost:3000/user/user-profile"
+    successRedirect: "/user/user-profile"
   })
 );
 app.get("/logout",function(req, res){
   req.logout();
-  res.redirect("http://localhost:3000/");
+  res.redirect("/");
 });
 
 app.get("/api/me", function(req, res) {
@@ -108,6 +109,11 @@ app.get("/api/item/:id", menuController.getItem);
 app.post("/api/item", menuController.addItem);
 app.put("/api/item", menuController.updateItem);
 app.delete("/api/item/:id", menuController.deleteItem);
+
+const path = require("path");
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "/../build/index.html"));
+});
 
 app.listen(port, () => {
   console.log(`Port: ${port}`);

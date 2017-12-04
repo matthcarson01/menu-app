@@ -9,6 +9,7 @@
     "express": "^4.16.2",
     "express-session": "^1.15.6",
     "firebase": "^4.6.2",
+    "forever": "^0.15.3",
     "lodash": "^4.17.4",
     "massive": "^4.5.0",
     "passport": "^0.4.0",

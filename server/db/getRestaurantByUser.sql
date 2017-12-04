@@ -1,1 +1,0 @@
-SELECT * FROM restaurants WHERE user_id = $1;

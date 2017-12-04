@@ -12,10 +12,10 @@ export default class HeaderBar extends Component {
     this.handleLogout=this.handleLogout.bind(this);
   }
   handleLogin() {
-    window.location.href = "http://localhost:3001/login";
+    window.location.href = "/login";
   }
   handleLogout() {
-    window.location.href = "http://localhost:3001/logout";
+    window.location.href = "/logout";
   }
     componentWillMount() {
     axios.get("/api/me").then(response => {

@@ -1,1 +1,0 @@
-INSERT INTO users (authid, user_name) VALUES ($1, $2) RETURNING authid, user_name;
