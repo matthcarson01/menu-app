@@ -1,4 +1,16 @@
 module.exports = {
+    getCities: (req,res,next) => {
+        const dbInstance = req.app.get('db');
+        dbInstance.getCities()
+                .then(cities =>{res.status(200).send(cities)})
+                .catch(()=> console.log);
+    },
+    getType: (req,res,next) => {
+        const dbInstance = req.app.get('db');
+        dbInstance.getType()
+                .then(type =>{res.status(200).send(type)})
+                .catch(()=> console.log);
+    },
     getRestaurant: (req,res,next) => {
         const dbInstance = req.app.get('db');
         dbInstance.getRestaurantByUser([req.params.id])

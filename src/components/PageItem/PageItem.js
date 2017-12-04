@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import {Header,Segment,Item} from "semantic-ui-react";
 
 import { requestItems } from "../../ducks/reducer";
+import "./PageItem.css";
 
 class PageItem extends Component {
     constructor(props){
@@ -20,14 +21,13 @@ class PageItem extends Component {
         const section = this.props.section;
         const items = this.state.items;
         return <div style={{ width: "90%", margin: "1em auto" }}>
-            {items.length>0 && <Segment basic>
+            {items.length > 0 && <Segment basic>
                 <Header as="h3" dividing style={{ padding: "1em" }}>
                   {section.section_name}
                 </Header>
                 <Item.Group>
-                  {items.map(item => (<Item>
+                  {items.map(item => <Item className="menuItem">
                       <Item.Image size="tiny" src={item.item_image} alt={item.item_name} />
-
                       <Item.Content>
                         <Item.Header as="a">
                           {item.item_name}
@@ -40,7 +40,7 @@ class PageItem extends Component {
                           Price: ${item.item_price}
                         </Item.Extra>
                       </Item.Content>
-                    </Item>))}
+                    </Item>)}
                 </Item.Group>
               </Segment>}
           </div>;

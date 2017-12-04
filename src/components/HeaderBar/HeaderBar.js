@@ -27,20 +27,13 @@ export default class HeaderBar extends Component {
     });
   }
   render() {
-    return <div>
-        <Segment vertical >
-          <Container>
-            <Menu secondary size="large">
-              <Menu.Header>
-                <Image src={appLogo} size="tiny" as={Link} to="/" wrapped />
-              </Menu.Header>
-              <Menu.Item position="right">
-                {!this.state.user && <Button as="a" onClick={this.handleLogin} content="Log In" as="a" color="blue" />}
-                {this.state.user && <Button as="a" onClick={this.handleLogout} content="Log Out" as="a" inverted color="red" />}
-              </Menu.Item>
-            </Menu>
-          </Container>
-        </Segment>
-      </div>;
+    let showButton = this.props.showButton;
+    return(
+        <nav className="barShadow">
+          <Image src={appLogo} as={Link} to="/" wrapped className="logo" />
+          {!this.state.user && showButton && <Button as="a" onClick={this.handleLogin} content="Log In/Sign Up" as="a" color="blue" style={{ width: "10rem", height: "2.25rem" }} />}
+          {this.state.user && showButton && <Button as="a" onClick={this.handleLogout} content="Log Out" as="a" inverted color="red" style={{ width: "6rem", height: "2.25rem" }} />}
+        </nav>
+    )
   }
 }

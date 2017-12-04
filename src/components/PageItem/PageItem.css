@@ -1,0 +1,8 @@
+.menuItem:hover{
+    background-color: rgb(49, 61, 168)!important;
+}
+.menuItem{
+    display:flex;
+    justify-content: flex-start;
+    align-items: center;
+}

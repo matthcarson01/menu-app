@@ -1,43 +1,68 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Item } from "semantic-ui-react";
+import { Header, Item } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import HeaderBar from "../HeaderBar/HeaderBar";
-import { propertyToUrl, urlToProperty, urlToList } from "query-string-params";
+import {urlToProperty} from "query-string-params";
 
 import { requestRestaurants } from "../../ducks/reducer";
 import "./Results.css";
 
 class Results extends Component {
     componentWillMount(){
-      const parsed = urlToProperty(this.props.location.search);
+      let parsed = urlToProperty(this.props.location.search);
       let {city,type} = parsed;
-      console.log(`city:${city} & type ${type}`);
-
       this.props.requestRestaurants({city,type});
     }
     render(){
         const restaurants = this.props.restaurants;
-
+        let parsed = urlToProperty(this.props.location.search);
+        let { city, type } = parsed;
+        let subscriptBoth = `Results for ${type} Restaurants in ${city}`;
+        let subscriptCity = `Results for All Restaurants in ${city}`;
+        let subscriptType = `Results for All  ${type} Restaurants`;
         return <div>
-            <HeaderBar />
-            <main>
-              <h1>Test</h1>
+            <HeaderBar showButton={false} />
+            <main className="resultSection">
+              {city && type && <Header as="h2" content="Search Results" subheader={subscriptBoth} textAlign="left" />}
+              {!city && type && <Header as="h2" content="Search Results" subheader={subscriptType} textAlign="left" />}
+              {city && !type && <Header as="h2" content="Search Results" subheader={subscriptCity} textAlign="left" />}
               {restaurants.length <= 0 && <h3>No Results</h3>}
-              <Item.Group>
-                {restaurants.map(restaurant => <Item>
-                    <Item.Image size="small" src={restaurant.cover_image} />
-                    <Item.Content>
-                      <Item.Header as={Link} to={`/eat/${restaurant.restaurant_url}`}>
-                        {restaurant.restaurant_name}
-                      </Item.Header>
-                      <Item.Description>
-                          <div>{restaurant.address}</div>
-                          <div>{restaurant.city}</div>
-                          <div>{restaurant.state}</div>
+              <Item.Group divided style={{ width: "100%" }}>
+                {restaurants.map(restaurant => (
+                  <Item
+                    key={restaurant.restaurant_id}
+                    style={{ width: "100%" }}
+                    className="result"
+                  >
+                    <Item.Image
+                      size="small"
+                      src={restaurant.cover_image}
+                    />
+                    <Item.Content className="resultBox">
+                      <Item.Header
+                        as='h1'
+                        as={Link}
+                        to={`/eat/${restaurant.restaurant_url}`}
+                        content={restaurant.restaurant_name}
+                      />
+                      {/* {restaurant.restaurant_name}
+                      </Item.Header> */}
+                      <Item.Meta content="Address" />
+                      {/* <span>Address</span>
+                      </Item.Meta> */}
+                      <Item.Description className="resultBox">
+                        <span>
+                          {restaurant.address}
+                          <br />
+                        </span>
+                        <span>
+                          {restaurant.city}, {restaurant.state}
+                        </span>
                       </Item.Description>
                     </Item.Content>
-                  </Item>)}
+                  </Item>
+                ))}
               </Item.Group>
             </main>
           </div>;

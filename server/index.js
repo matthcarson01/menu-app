@@ -87,6 +87,9 @@ app.get("/api/me", function(req, res) {
   res.status(200).json(req.user);
 });
 
+app.get("/api/city", restaurantController.getCities);
+app.get("/api/type", restaurantController.getType);
+
 app.get("/api/user_restaurant/:id", restaurantController.getRestaurant);
 app.post("/api/user_restaurant/:id", restaurantController.createRestaurant);
 app.put("/api/user_restaurant_edit/:id", restaurantController.editRestaurant);

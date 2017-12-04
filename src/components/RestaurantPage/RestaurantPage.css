@@ -1,0 +1,28 @@
+.menuHero{
+    background-color:rgba(27, 32, 80, 0.7);
+    display:flex;
+    flex-flow:row nowrap;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    height: 100%;
+    width:100%;
+}
+.appLogo{
+    align-self:flex-start;
+    height: 4rem;
+    width: 4rem;
+    position: absolute;
+    top:5%;
+    left:7.5%;
+
+}
+.menuHero h1{
+    margin:auto;
+    color:white;
+}
+/* .titleHighlight{
+    width:20rem;
+    height: 3rem;
+    background: black;
+} */

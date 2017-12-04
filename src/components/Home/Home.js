@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+
 import { Button, Grid, Input } from "semantic-ui-react";
 import { Redirect } from "react-router";
 import { connect } from "react-redux";
@@ -21,6 +22,8 @@ class Home extends Component {
     this.handleChange=this.handleChange.bind(this);
     this.handleSubmit=this.handleSubmit.bind(this);
   }
+
+
   
   handleChange(e) {
     this.setState({ [e.target.name]: e.target.value });
@@ -45,22 +48,39 @@ class Home extends Component {
         cityRedirect: false,
         typeRedirect: true
       });
-    }}
-  //   this.props
-  //     .requestRestaurants({city:this.state.city,type:this.state.type})
-  //     .then(this.setState({ fireRedirect: true }));
-    
-  // }
+    }
+  }
 
   render() {
-    const { fireRedirect, cityRedirect, typeRedirect } = this.state;
+    const { fireRedirect, cityRedirect, typeRedirect} = this.state;
     return <div>
-        <HeaderBar />
-        <Grid textAlign="center" style={{ height: "89vh" }} verticalAlign="middle" className="mainContent">
-          <Grid.Column style={{ maxWidth: 800 }}>
-            <Input labelPosition="right">
-              <input list="food type" name="type" placeholder="Try this.." style={{ width: 300 }} onChange={this.handleChange} />
-              <input list="city" name="city" placeholder="City.." style={{ width: 200 }} onChange={this.handleChange} />
+        <HeaderBar showButton={true}/>
+        <main className="mainContent">
+          <Input className="searchInput">
+            <input list="food type" name="type" placeholder="Try this.." className="typeInput" onChange={this.handleChange} />
+            <input list="city" name="city" placeholder="City.." className="cityInput" onChange={this.handleChange} />
+            <Button onClick={this.handleSubmit} type="submit" className="searchButton">
+              Search
+            </Button>
+          </Input>
+          <datalist id="food type">
+            <option value="Asian" />
+            <option value="Bar-B-Q" />
+            <option value="Coffee Shop" />
+            <option value="Mexican" />
+            <option value="Cajun" />
+          </datalist>
+          <datalist id="city">
+            <option value="Dallas" />
+            <option value="Fort Worth" />
+            <option value="Austin" />
+          </datalist>
+        </main>
+        {/* <Grid textAlign="center" style={{ height: "89vh", margin: "15vh", width: "100%" }} verticalAlign="middle" className="mainContent">
+          <Grid.Column>
+            <Input>
+              <input list="food type" name="type" placeholder="Try this.." className="typeInput" onChange={this.handleChange} />
+              <input list="city" name="city" placeholder="City.." className="cityInput" onChange={this.handleChange} />
               <Button onClick={this.handleSubmit} type="submit">
                 Search
               </Button>
@@ -76,15 +96,12 @@ class Home extends Component {
               <option value="Dallas" />
               <option value="Fort Worth" />
               <option value="Austin" />
-              <option value="San Antonio" />
-              <option value="Houston" />
             </datalist>
           </Grid.Column>
-        </Grid>
-        results?city=Dallas&type=Asian
-        {fireRedirect && cityRedirect && typeRedirect && <Redirect to={`/results?city=${this.state.city}&type=${this.state.type}`} />}
-        {fireRedirect && cityRedirect && !typeRedirect && <Redirect to={`/results?city=${this.state.city}`} />}
-        {fireRedirect && !cityRedirect && typeRedirect && <Redirect to={`/results?type=${this.state.type}`} />}
+        </Grid> */}
+        {fireRedirect && cityRedirect && typeRedirect && <Redirect to={`/results?city=${this.state.city}&type=${this.state.type}`} style={{display:"none"}}/>}
+        {fireRedirect && cityRedirect && !typeRedirect && <Redirect to={`/results?city=${this.state.city}`}  style={{display:"none"}} />}
+        {fireRedirect && !cityRedirect && typeRedirect && <Redirect to={`/results?type=${this.state.type}`} style={{display:"none"}} />}
       </div>;
   }
 }
