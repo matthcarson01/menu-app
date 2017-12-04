@@ -1,10 +1,28 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Button, Container, Header, Icon, Segment } from "semantic-ui-react";
+import {
+  Button,
+  Container,
+  Header,
+  Icon,
+  Segment,
+  Form,
+  Input,
+  Select,
+  TextArea
+} from "semantic-ui-react";
 
 import firebase from "../../firebase";
 import { requestUser, requestRestaurant, editRestaurant } from "../../ducks/reducer";
 import "./RestaurantProfile.css"
+
+const options = [
+  { key: "asian", text: "Asian", value: "Asian" },
+  { key: "bar-b-q", text: "Bar-B-Q", value: "Bar-B-Q" },
+  { key: "coffee shop", text: "Coffee Shop", value: "Coffee Shop" },
+  { key: "mexican", text: "Mexican", value: "Mexican" },
+  { key: "cajun", text: "Cajun", value: "Cajun" }
+];
 
 class RestaurantProfile extends Component {
   constructor(props) {
@@ -127,17 +145,14 @@ class RestaurantProfile extends Component {
   render(){
     const restaurant = this.props.restaurant[0];
     let imagePreview = null;
-    // let downloadURL = null;
-    if (this.state.imagePreviewUrl) {imagePreview = (<img src={this.state.imagePreviewUrl} className = "image-preview" alt="Cover" style={{maxWidth:"300px", height: "auto"}}/>)};
-    // if (this.state.downloadURL) {downloadURL = (<h1> {this.state.downloadURL} </h1>)};
+    if (this.state.imagePreviewUrl) {imagePreview = (<img src={this.state.imagePreviewUrl} className = "image-preview" alt="Cover" className="CoverImage"/>)};
     return <div>
-        <Segment basic style={{height:"7.5rem"}}>
-        <Header size="large" textAlign="left">
-          Restaurant Profile
-        </Header>
-        <Button content="Edit Profile" icon="wrench" labelPosition="left" size="medium" floated="left" onClick={this.showForm} style={{ width: "11rem", height: "2.25rem" }} />
+        <Segment basic style={{ height: "7.5rem" }}>
+          <Header as="h1" textAlign="left">
+            Restaurant Profile
+          </Header>
+          <Button content="Edit Profile" icon="wrench" labelPosition="left" size="medium" floated="left" onClick={this.showForm} style={{ width: "11rem", height: "2.25rem" }} />
         </Segment>
-        {/* <button onClick={this.showForm}>Edit</button> */}
         {!this.state.editForm && <section>
             <Container fluid textAlign="justified">
               <Header as="h3">Name</Header>
@@ -169,50 +184,31 @@ class RestaurantProfile extends Component {
               <img src={this.state.cover_image} alt="cover not showing" className="CoverImage" />
             </Container>
           </section>}
-        {this.state.editForm && <form onSubmit={this.onSubmit}>
-            <h1>{restaurant.restaurant_name}</h1>
-            <div className="form-group">
-              <label>
-                Name:
-                <input type="text" name="restaurant_name" value={this.state.restaurant_name} onChange={this.onChange} />
-              </label>
-              <label>
-                Address:
-                <input type="text" name="address" value={this.state.address} onChange={this.onChange} />
-              </label>
-              <label>
-                City:
-                <input type="text" name="city" value={this.state.city} onChange={this.onChange} />
-              </label>
-              <label>
-                State:
-                <input type="text" name="state" value={this.state.state} onChange={this.onChange} />
-              </label>
-              <label>
-                Zip:
+        {this.state.editForm && <Form onSubmit={this.onSubmit} className="formProfile">
+            <Form.Field control={Input} label="Name" name="restaurant_name" value={this.state.restaurant_name} onChange={this.onChange} className="formLabel" />
+            <Form.Field control={Input} label="Address" name="address" value={this.state.address} onChange={this.onChange} className="formLabel" />
+            <Form.Group widths={3} className="formLabel">
+              <Form.Field control={Input} label="City" name="city" value={this.state.city} onChange={this.onChange} />
+              <Form.Field control={Input} label="State" name="state" value={this.state.state} onChange={this.onChange} />
+              <Form.Field>
+                <label>Zip</label>
                 <input type="number" name="zip" value={this.state.zip} onChange={this.onChange} />
-              </label>
-              <label>
-                Phone:
-                <input type="text" name="phone" value={this.state.phone} onChange={this.onChange} />
-              </label>
-              <label>
-                Email:
-                <input type="text" name="email" value={this.state.email} onChange={this.onChange} />
-              </label>
-              <label>
-                Restaurant Type:
-                <input type="text" name="restaurant_type" value={this.state.restaurant_type} onChange={this.onChange} />
-              </label>
-              <label>
-                {imagePreview}
-                <input type="file" onChange={event => {
-                    this.processImageUpload(event);
-                  }} alt="preview image" />
-              </label>
-              <input type="submit" value="Submit" className="Submit-Button" />
-            </div>
-          </form>}
+              </Form.Field>
+            </Form.Group>
+            <Form.Field control={Input} label="Phone" name="phone" value={this.state.phone} onChange={this.onChange} className="formLabel" />
+            <Form.Field control={Input} label="E-mail" name="email" value={this.state.email} onChange={this.onChange} className="formLabel" />
+            <Form.Field control={Input} label="Restaurant Type" name="restaurant_type" value={this.state.restaurant_type} onChange={this.onChange} className="formLabel" />
+            <Form.Field>
+              <label>Cover Image</label>
+              {imagePreview}
+              <input type="file" onChange={event => {
+                  this.processImageUpload(event);
+                }} alt="preview image" />
+            </Form.Field>
+            <Form.Field control={Button} type="submit" value="Submit">
+              Submit
+            </Form.Field>
+          </Form>}
       </div>;
   }
 }

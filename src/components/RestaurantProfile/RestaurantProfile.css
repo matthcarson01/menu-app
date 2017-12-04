@@ -1,7 +1,18 @@
 .CoverImage{
-    width:200px;
-    height: auto;
+    max-width:200px !important;
+    max-height: 200px;
+    height: auto !important;
+    
 }
 .title{
     font-weight: bold;
+}
+.formProfile{
+    width:100%;
+    display:flex;
+    flex-flow: column wrap;
+    align-items: flex-start;
+}
+.formLabel{
+    width:75%;
 }
